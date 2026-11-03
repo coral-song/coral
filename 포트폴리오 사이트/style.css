@@ -1,0 +1,216 @@
+/* ============================================================
+   style.css — 송산호 포트폴리오
+   ------------------------------------------------------------
+   [1] 색 기준값   [2] 기본   [3] 헤더   [4] 히어로
+   [5] 아래 배경   [6] 섹션   [7] 소개 그리드   [8] 소제목
+   [9] 기술 아이콘 [10] 타임라인   [11] 슬라이더
+   [12] 푸터   [13] 상세 페이지   [14] 간격 편집 패널
+   [15] 반응형   [16] 모션 최소화
+   ============================================================ */
+
+/* 본문 400 */
+@font-face {
+  font-family: 'Eulyoo';
+  src: url(./font/Eulyoo1945-Regular.woff2) format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* 제목·강조 600 */
+@font-face {
+  font-family: 'Eulyoo';
+  src: url(./font/Eulyoo1945-SemiBold.woff2) format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+
+/* [1] 색과 기준값 : 여기 값만 바꾸면 전체 톤이 바뀝니다 --------- */
+:root {
+  --top: #14202e;              /* 히어로 바로 아래 색 */
+  --mid: #0b1626;              /* 중간 밤색 */
+  --low: #0a1220;              /* 페이지 바닥색 */
+  --ink: #cfcfcf;              /* 기본 글자 */
+  --muted: #1d7ac2;            /* 소제목·보조 글자 */
+  --line: rgba(232, 241, 247, .16);   /* 구분선 */
+  --max: 1400px;               /* 내용 최대 폭 */
+  --pad: 20px;                 /* 좌우 여백 */
+
+  --about-gap-x: 300px;        /* 소개 그리드 좌우 간격 (편집 패널이 바꿈) */
+  --about-gap-y: 40px;         /* 소개 그리드 위아래 간격 */
+  --about-width: 1800px;       /* 소개 그리드 전체 폭 */
+}
+
+/* [2] 기본 --------------------------------------------------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--low); color: var(--ink);
+  font-family: 'Eulyoo', "LxgwLiteracy", system-ui, sans-serif;
+  font-weight: 400; font-synthesis: none;}
+h1, h2, h3, h4, p, ul, strong{font-weight: 600;}
+ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+
+/* [3] 헤더 : 항상 보이는 작은 캡슐 --------------------------- */
+.header { position: fixed; top: 25px; left: 50%; z-index: 30;
+  display: flex; align-items: center; padding: 10px; border-radius: 999px;
+  transform: translateX(-50%); overflow: hidden;
+  /* 스크롤 전에도 옅게 깔아 메뉴가 묻히지 않게 */
+  background: rgba(10, 18, 32, .35);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .12);
+  transition: background .3s, box-shadow .3s, border-color .3s;}
+
+/* 스크롤 후 : 조금 더 진하게 */
+.header.on {background: rgba(10, 18, 32, .82);border-color: rgba(191, 216, 255, .28);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .45);}
+
+/* 마우스를 따라오는 빛 (싫으면 이 3줄 삭제) */
+.header::before { content: ""; position: absolute; top: -40px; left: var(--x, 50%);
+  width: 220px; height: 120px; transform: translateX(-50%); opacity: 0;
+  background: radial-gradient(circle, rgba(191, 216, 255, .22), transparent 70%);
+  transition: opacity .3s; pointer-events: none; }
+.header:hover::before { opacity: 1; }
+
+.logo { position: fixed; top: 26px; left: 32px; z-index: 31;
+  font-size: 14px; font-weight: 600; letter-spacing: .16em; color: #fff; }
+
+.nav { display: flex; gap: 15px; position: relative; z-index: 1; }
+.nav a { padding: 10px 20px; border-radius: 999px; font-size: 15px; font-weight: 400;
+  color: rgba(232, 241, 247, .78); text-shadow: 0 1px 3px rgba(0, 0, 0, .45);
+  transition: color .2s, background .2s; }
+.nav a:hover { color: #fff; background: rgba(255, 255, 255, .08); }
+.nav a.active { color: #fff; background: rgba(191, 216, 255, .16);
+  box-shadow: inset 0 0 0 1px rgba(191, 216, 255, .3); }
+
+/* [4] 히어로 : 배경 영상 ------------------------------------- */
+.hero { position: relative; height: 82vh; min-height: 440px; overflow: hidden;
+  background: var(--top); display: flex; align-items: flex-end; }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* 히어로 아래쪽을 다음 섹션 색과 이어지게 */
+.hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 180px;
+  z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 32, 46, 0) 0%, var(--top) 100%); }
+
+/* [5] 히어로 아래 : 이어지는 그라데이션 + 구름/별 ------------ */
+.below { position: relative; isolation: isolate; overflow: hidden;
+  background: linear-gradient(180deg, var(--top) 0%, #101e30 18%, var(--mid) 44%,
+    var(--low) 68%, #08131f 86%, #06101c 100%); }
+.below::before, .below::after { content: ""; position: absolute; left: 0; right: 0;
+  z-index: -1; pointer-events: none; }
+.below::before { top: 0; height: 75vh; opacity: .85;
+  background: url("./heromain/bg-cloudfloor.jpg") center top / cover no-repeat;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 15%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 15%, transparent 100%); }
+.below::after { bottom: 0; height: 85vh; opacity: .9;
+  background: url("./heromain/bg-stars.jpg") center bottom / cover no-repeat;
+  mask-image: linear-gradient(0deg, #000 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, transparent 100%); }
+
+/* [6] 섹션 공통 ---------------------------------------------- */
+.section { position: relative; z-index: 1; max-width: var(--max);
+  margin: 0 auto; padding: 96px var(--pad) 0; }
+.section h2 { padding-bottom: 14px; font-size: 40px; color: var(--ink); text-align: center; }
+
+/* 소개 섹션은 스크롤하면 서서히 나타남 (script.js 가 show 클래스 부여) */
+#about { opacity: 0; transform: translateY(40px); pointer-events: none;
+  transition: opacity .6s ease-out, transform .6s ease-out; }
+#about.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+/* [7] 소개 : 상단 문구 + 배너 + 2단 그리드 ------------------- */
+.intro-banner { display: block; width: 100%; max-height: 340px; object-fit: cover;
+  margin-bottom: 48px; border: 1px solid var(--ink); border-radius: 12px; }
+
+/* 2단 그리드 : 간격과 폭은 위 [1] 변수로 조절 */
+.about-grid { display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: var(--about-gap-x);
+  row-gap: var(--about-gap-y);
+  max-width: var(--about-width);
+  margin: 0 auto;
+  align-items: start;
+  text-align: left; }
+
+/* 같은 컬럼 안에서 항목(article) 사이 간격 */
+.about-grid article + article { margin-top: 24px; }
+
+/* [8] 소제목 (연락처·학력·기술·자격증·경력) ------------------ */
+.sub { display: block; width: 100%; max-width: 300px;
+  margin-bottom: 12px; padding-bottom: 6px;
+  font-size: 25px; font-weight: 600; color: var(--ink);
+  border-bottom: 1px solid var(--line); }
+
+/* [9] 기술 아이콘 ------------------------------------------- */
+.skills { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 40px 16px; }
+.skills li { display: flex; flex-direction: column; align-items: center;
+  gap: 20px; font-size: 15px; font-weight: 400; text-align: center; line-height: 1.3; }
+.skills img { width: 40px; height: 40px; display: block; }
+
+/* [10] 타임라인 (연락처·학력·자격증·경력) -------------------- */
+.timeline li { display: grid; gap: 4px; padding: 8px 0; }
+.timeline span { font-size: 15px; color: var(--muted); font-weight: 400;}
+.timeline strong { font-size: 20px; font-weight: 400; line-height: 1.5; }
+.timeline em { display: block; font-style: normal; font-size: 13.5px;
+  color: var(--muted); margin-bottom: 6px; }
+
+/* [11] 슬라이더 (이력 및 수상 / 개인작업) -------------------- */
+.slider-container { position: relative; display: flex; align-items: center; margin-top: 24px; }
+.slider-track { display: flex; gap: 24px; overflow-x: auto; scroll-behavior: smooth;
+  width: 100%; padding: 10px 0; scrollbar-width: none; }
+.slider-track::-webkit-scrollbar { display: none; }
+.slider-track.center-track { justify-content: center; }   /* 항목이 적을 때 가운데로 */
+.slider-item { flex: 0 0 210px; cursor: pointer; text-align: center; }
+.slider-item a { display: block; }
+.thumb { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block;
+  border: 1px solid var(--line); background: #16232f; border-radius: 8px;
+  transition: transform .3s; }
+.slider-item:hover .thumb { transform: scale(1.04); }
+.slider-item strong { display: block; margin-top: 10px; font-size: 18px; font-weight: 400; }
+.slider-item span { font-size: 15px; color: var(--muted); }
+.slider-btn { width: 40px; height: 40px; flex-shrink: 0; z-index: 10; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+  color: var(--ink); border: 1px solid var(--line); border-radius: 50%;
+  background: rgba(10, 18, 32, .8); transition: background .2s, border-color .2s; }
+.slider-btn:hover { background: rgba(232, 241, 247, .15); border-color: #fff; }
+.prev-btn { margin-right: 12px; }
+.next-btn { margin-left: 12px; }
+
+/* [12] 푸터 ------------------------------------------------- */
+.footer { max-width: var(--max); margin: 96px auto 0; padding: 32px var(--pad) 72px;
+  border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+
+/* [13] 상세 페이지 (detail.html 에서 body 에 detail-page 클래스) */
+body.detail-page { background: #fff; color: #024222; padding: 60px 20px;
+  max-width: 1080px; margin: 0 auto; }
+.detail-page header { margin-bottom: 30px; font-size: 20px; color: #282966; }
+.detail-page img { width: 100%; display: block; }
+.detail-page h2 { margin-top: 40px; text-align: center; }
+.detail-page p { font-size: 18px; text-align: center; }
+.yt-btn { display: inline-block; margin-top: 24px; padding: 12px 24px;
+  background: #f00; color: #fff; border-radius: 8px; font-weight: 600; font-size: 15px; }
+
+/* [15] 반응형 : 넓은 화면 (768px 이상) ---------------------- */
+@media (min-width: 768px) {
+  :root { --pad: 40px; }
+  .about-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .timeline li { grid-template-columns: 110px 1fr; gap: 16px; align-items: baseline; }
+}
+
+/* [16] 반응형 : 좁은 화면 (767px 이하) ---------------------- */
+@media (max-width: 767px) {
+  .header { top: 10px; padding: 4px; }
+  .logo { top: 16px; left: 16px; font-size: 12px; }
+  .nav { gap: 2px; }
+  .nav a { padding: 7px 11px; font-size: 12px; }
+  .about-grid { grid-template-columns: 1fr; row-gap: 36px; max-width: 100%; }
+  .skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .slider-track.center-track { justify-content: flex-start; }
+  .grid-editor { right: 12px; bottom: 12px; }
+}
+
+/* [17] 모션 최소화 사용자 : 영상 대신 포스터 ------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+  .hero { background: url("./heromain/poster.jpg") center / cover no-repeat; }
+}
