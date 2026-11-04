@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>수상 및 이력 상세</title>
+  <title>상세페이지</title>
   <link rel="stylesheet" href="style.css">
+    <!-- 탭 아이콘 : heromain 폴더의 icon.png -->
+  <link rel="icon" href="./heromain/icon.png" sizes="32x32">
+
   <style>
     /* 처음에는 모든 상세 내용을 숨겨두고, 선택된 번호만 보여줍니다 */
-    .detail-item { display: none; }
+    .detail-item {
+      display: none;
+    }
   </style>
 </head>
+
 <body class="detail-page">
 
-  <!-- 메인으로 돌아가기 (클릭 시 이력 및 수상 #work 위치로 제자리 복귀) -->
-  <header>
-    <a href="index.html#work">← 메인으로 돌아가기</a>
-  </header>
-
   <main>
-<!-- ==========================================
+    <!-- 제목 위 상단 줄 : 돌아가기 + 유튜브 -->
+    <div class="detail-bar">
+      <a class="back" href="index.html#work">← 메인으로 돌아가기</a>
+      <a class="yt-btn" id="ytBtn" href="https://www.youtube.com/shorts/c4yfzRvDUHg" target="_blank" rel="noopener">
+        ▶ 유튜브에서 영상 시청하기</a>
+    </div>
+
+    <!-- ==========================================
          [1번 내용] 2026 AI 생태 이야기 영상 공모전 (id="item1")
          ========================================== -->
     <div id="item1" class="detail-item">
@@ -30,14 +39,13 @@
       <!-- 2. 추가 이미지 및 기획의도 -->
       <img src="./detail/공모전_2.png" alt="공모전 이미지 2">
       <h2>기획의도</h2>
-      <p>환경보호 실천이라는 주제는 많이 쓰인 내용이라 생각. 같은 내용을 말하기 보다는 바라보는 방식의 차별점을 주기위해 재밌는 시각에서 <br> 바라보면 어떨까 하는 생각에 어릴때 즐겨봤던 클레이 애니메이션 스타일과 미술작품이라는 컨셉을 생각 하게 되었습니다.</p>
+      <p>환경보호 실천이라는 주제는 많이 쓰인 내용이라 생각해서 같은 내용을 말하기 보다는 바라보는 방식의 차별점을<br>주기위해 재밌는 시각에서 바라보면 어떨까 하는 생각에 어릴때 즐겨봤던 클레이
+        애니메이션 스타일과<br>미술작품이라는 컨셉을 생각 하게 되었습니다.</p>
       <!-- 3. 과정 이미지 및 제작과정 -->
       <img src="./detail/공모전_3.png" alt="공모전 이미지 3">
       <h2>제작과정</h2>
       <p>요구사항 : 원본캐릭터를 응용, 9:16비율<br>아트 스타일 : 클레이 애니메이션<br>사용된 AI : 구글 FLOW<br>기타 프로그램 : 프리미어 프로</p>
-      <!-- 유튜브 영상 바로가기 버튼 (새 탭으로 열림) -->
-      <a class="yt-btn" href="https://www.youtube.com/shorts/c4yfzRvDUHg" target="_blank">▶ 유튜브에서 영상 시청하기</a>
-    </div> 
+    </div>
 
     <!-- ==========================================
          [2번 내용] 내 이력 상세 내용 (id="item2")
@@ -51,19 +59,21 @@
       <!-- 2. 작업 상세 및 사용 툴 -->
       <img src="./detail/이력_2.png" alt="이력 이미지 2">
       <h2>작업 내용 및 사용 프로그램</h2>
-      <p>작업 기간 : 2019 — 현재<br>주요 작업 : 대사 식자 디자인, 효과음 리터칭, 웹툰 컷 재구성 및 연출 보정<br>사용 프로그램 : 포토샵(Photoshop), 일러스트레이터(Illustrator), 인디자인(InDesign)</p>
+      <p>작업 기간 : 2019 — 현재<br>주요 작업 : 대사 식자 디자인, 효과음 리터칭, 웹툰 컷 재구성 및 연출 보정<br>사용 프로그램 : 포토샵(Photoshop),
+        일러스트레이터(Illustrator), 인디자인(InDesign)</p>
     </div>
 
 
 
 
 
-<!-- 주소창의 번호(?id=1 또는 ?id=2)를 확인해 해당 내용만 켜주는 스크립트 -->
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id") || "1"; // 번호가 없으면 기본으로 1번 표시
-    const target = document.getElementById("item" + id);
-    if (target) target.style.display = "block";
-  </script>
+    <!-- 주소창의 번호(?id=1 또는 ?id=2)를 확인해 해당 내용만 켜주는 스크립트 -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id") || "1"; // 번호가 없으면 기본으로 1번 표시
+      const target = document.getElementById("item" + id);
+      if (target) target.style.display = "block";
+    </script>
 </body>
+
 </html>
