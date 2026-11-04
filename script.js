@@ -267,3 +267,7 @@
   handleHeaderScroll();   // 새로고침 시 상태 맞추기
   markActiveMenu();
 })();
+
+document.querySelectorAll(".sub").forEach((el, i) => {
+  el.style.setProperty("--i", i);
+});
