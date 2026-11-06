@@ -1,0 +1,40 @@
+/* footer edit link */
+.footer .edit-link {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+
+.footer .edit-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1;
+  transition: color .2s, border-color .2s, background .2s;
+}
+
+.footer .edit-link a:hover,
+.footer .edit-link a:focus-visible {
+  color: var(--ink);
+  border-color: rgba(191, 216, 255, .45);
+  background: rgba(191, 216, 255, .08);
+}
+
+.footer .edit-link a::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .7;
+}
+
+.footer .edit-link a:focus-visible {
+  outline: 2px solid rgba(191, 216, 255, .6);
+  outline-offset: 2px;
+}
