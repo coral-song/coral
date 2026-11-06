@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="./style.css">
   <!-- 2. 상세페이지 비주얼 시스템 (반드시 style.css 뒤에) -->
   <link rel="stylesheet" href="./detail-visual.css">
+  <link rel="stylesheet" href="./edit-link.css">
+  <link rel="stylesheet" href="./site-editor.css">
 
   <style>
     /* 주소에 따라 선택된 번호만 보여줍니다 */
@@ -132,6 +134,12 @@
       <p>기존 출판 만화를 모바일 스크롤 환경에 맞춘 웹툰 버전으로 재편집하는 작업을 진행하였습니다.</p>
     </div>
 
+    <footer class="footer">
+      <p class="edit-link">
+        <a href="https://github.dev/coral-song/coral/blob/main/detail.html" target="_blank" rel="noopener">이 페이지 편집</a>
+      </p>
+    </footer>
+
   </main>
 
   <script>
@@ -140,6 +148,8 @@
     const target = document.getElementById("item" + id);
     if (target) target.style.display = "block";
   </script>
+
+  <script src="./site-editor.js"></script>
 
 </body>
 

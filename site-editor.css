@@ -3,6 +3,13 @@
    ============================================================ */
 
 /* ---------- 편집 중 표시 ---------- */
+/* display 값을 준 요소는 hidden 속성만으로는 숨겨지지 않아 명시적으로 처리 */
+.coral-fab[hidden],
+.coral-bar[hidden],
+.coral-style[hidden] {
+  display: none !important;
+}
+
 [contenteditable="true"] {
   outline: 1px dashed rgba(252, 253, 179, .55);
   outline-offset: 5px;
