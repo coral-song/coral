@@ -1,0 +1,197 @@
+/* ==========================================================
+   상세페이지 비주얼 시스템 — 시안 C 완성본
+   딥네이비 유리 패널 + 달빛 포인트
+
+   · style.css 뒤에 연결해서 사용합니다.
+   · 구조 : CASE 라벨(좌상단) + 워드(우상단) + 유리 패널 + 키워드 띠
+   ========================================================== */
+
+/* ---------- [1] 색과 기준값 ------------------------------ */
+body.detail-page {
+  --d-canvas: #0e1a2a;
+  /* 이미지 뒤 바탕 */
+  --d-ink: #e8f0f9;
+  /* 제목 */
+  --d-text: #d3dce7;
+  /* 본문 */
+  --d-sub: rgba(198, 219, 245, .72);
+  /* 보조 글자 */
+  --d-moon: #fcfdb3;
+  /* 달빛 포인트 */
+  --d-radius: 18px;
+  /* 패널 곡률 */
+  --d-pad: clamp(12px, 2vw, 28px);
+  /* 패널 안쪽 여백 */
+}
+
+/* ---------- [2] 페이지 뼈대 ------------------------------ */
+body.detail-page main {max-width: 1600px;}
+
+/* 상단 돌아가기 + 유튜브 */
+body.detail-page .detail-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 clamp(40px, 5vw, 72px);
+  font-size: 20px;}
+
+body.detail-page .detail-bar .back {
+  color: var(--d-sub);
+  text-decoration: none;
+  font-size: 20px;
+  letter-spacing: .1em;}
+
+body.detail-page .detail-bar .back:hover {
+  color: var(--d-moon);
+}
+
+body.detail-page .yt-btn {
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--d-line);
+  background: rgba(191, 216, 255, .08);
+  color: var(--d-ink);
+  font-size: 13px;
+  letter-spacing: .02em;
+  text-decoration: none;
+  transition: background .2s, border-color .2s;
+}
+
+body.detail-page .yt-btn:hover {
+  background: rgba(191, 216, 255, .16);
+  border-color: var(--d-line);
+}
+
+/* ---------- [3] 제목과 본문 ------------------------------ */
+body.detail-page h1 {
+  margin: 0 0 clamp(28px, 4vw, 48px);
+  font-size: 30px;
+  line-height: 0.4;
+  letter-spacing: .01em;
+  color: var(--d-ink);}
+
+body.detail-page h2 {
+  margin: clamp(36px, 4vw, 56px) 0 0;
+  font-size: clamp(19px, 1.8vw, 26px);
+  line-height: 1.35;
+  letter-spacing: .01em;
+  color: #bfd8ff;}
+
+body.detail-page p {
+  width: auto;
+  max-width: 46em;
+  margin: 14px 0 0;
+  font-size: clamp(16px, 1.15vw, 18px);
+  line-height: 1.8;
+  color: var(--d-text);
+}
+
+body.detail-page .d-divider {
+  height: 1px;
+  margin: clamp(40px, 5vw, 64px) 0;
+  border: 0;
+  background: linear-gradient(90deg, rgba(252, 253, 179, .35), rgba(252, 253, 179, 0));
+}
+
+/* ---------- [4] 그림 묶음 -------------------------------- */
+body.detail-page .d-fig {
+  position: relative;
+  margin: 0 0 clamp(48px, 6vw, 88px);
+}
+
+/* ---------- [5] CASE 라벨 + 달빛 선 ---------------------- */
+body.detail-page .d-case {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: auto;
+  margin: 0 0 18px;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--d-ink);
+}
+
+body.detail-page .d-case::after { content: ""; width: 46px; height: 1px; background: var(--d-moon); flex: none;}
+
+/* ---------- [7] 유리 패널 -------------------------------- */
+body.detail-page .d-panel {
+  border-radius: var(--d-radius);
+  background-color: var(--d-ink);}
+
+/* d-media로 감싸지 않은 이미지까지 */
+body.detail-page .d-panel img {border: 0; background-color: transparent;}
+
+/* ---------- [10] 반응형 --------------------------------- */
+@media (max-width: 900px) {
+  body.detail-page .d-word {
+    font-size: clamp(56px, 15vw, 110px);
+    opacity: .7;
+  }
+
+  body.detail-page .d-panel {
+    border-radius: 14px;
+    --d-pad: 10px;
+  }
+
+  body.detail-page .d-fig {
+    margin-bottom: clamp(36px, 7vw, 56px);
+  }
+}
+
+@media (max-width: 560px) {
+  body.detail-page .d-word {
+    font-size: 48px;
+    top: -1.2em;
+  }
+
+  body.detail-page .d-case {
+    font-size: 11px;
+    letter-spacing: .18em;
+    gap: 10px;
+  }
+
+  body.detail-page .d-case::after {
+    width: 26px;
+  }
+
+  body.detail-page .d-tags {
+    font-size: 11px;
+    letter-spacing: .12em;
+  }
+
+  body.detail-page .d-tags li {
+    padding: 0 10px;
+  }
+}
+
+/* ---------- [11] 접근성 --------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  body.detail-page .d-panel {
+    transition: border-color .3s ease, box-shadow .3s ease;
+  }
+
+
+@media (prefers-reduced-motion: reduce) {
+  body.detail-page .d-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(32, 56, 86, .96);
+  }
+}
+
+@media (prefers-contrast: more) {
+  body.detail-page .d-panel {
+    background: rgba(38, 64, 96, .98);
+    border-color: #ffffff;
+  }
+
+  body.detail-page .d-case,
+  body.detail-page .d-tags {
+    color: #dbe7f7;
+  }
+}
