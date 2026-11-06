@@ -135,9 +135,9 @@
 
   /* 조절 항목 : 라벨이나 범위를 바꾸려면 이 배열만 수정 */
   const CONTROLS = [
-    { key: "x", label: "좌우 간격", min: 0, max: 300, step: 4, def: 300 },
+    { key: "x", label: "좌우 간격", min: 0, max: 300, step: 4, def: 200 },
     { key: "y", label: "위아래 간격", min: 0, max: 140, step: 4, def: 40 },
-    { key: "w", label: "그리드 폭", min: 600, max: 2200, step: 20, def: 1800 }
+    { key: "w", label: "그리드 폭", min: 1000, max: 2200, step: 20, def: 1400 }
   ];
 
   /* 기본값 */
