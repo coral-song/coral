@@ -6,7 +6,9 @@
 /* display 값을 준 요소는 hidden 속성만으로는 숨겨지지 않아 명시적으로 처리 */
 .coral-fab[hidden],
 .coral-bar[hidden],
-.coral-style[hidden] {
+.coral-style[hidden],
+.coral-imgmenu[hidden],
+.coral-preview[hidden] {
   display: none !important;
 }
 
@@ -126,7 +128,7 @@ img.coral-img:hover {
   right: 24px;
   bottom: calc(var(--coral-fab-offset, 24px) + 60px);
   z-index: 9999;
-  width: 236px;
+  width: 252px;
   padding: 16px 16px 12px;
   border-radius: 14px;
   border: 1px solid rgba(191, 216, 255, .28);
@@ -137,7 +139,74 @@ img.coral-img:hover {
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 12px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, .55);
+  display: flex;
+  flex-direction: column;
+  max-height: 74vh;
 }
+
+.coral-style__scroll {
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.coral-style__group {
+  margin: 12px 0 6px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(191, 216, 255, .14);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: #fcfdb3;
+}
+.coral-style__group:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+
+.coral-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.coral-inline button {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(191, 216, 255, .25);
+  background: rgba(191, 216, 255, .1);
+  color: #d6e2f0;
+  font-size: 11px;
+  cursor: pointer;
+}
+.coral-inline button:hover { border-color: #fff; }
+
+/* ---------- 이미지 메뉴 ---------- */
+.coral-imgmenu {
+  position: fixed;
+  z-index: 10001;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(191, 216, 255, .3);
+  background: rgba(12, 22, 38, .97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .55);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.coral-imgmenu button {
+  padding: 7px 11px;
+  border-radius: 7px;
+  border: 1px solid rgba(191, 216, 255, .2);
+  background: rgba(191, 216, 255, .08);
+  color: #e8f0f9;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.coral-imgmenu button:hover { background: rgba(252, 253, 179, .18); }
+.coral-imgmenu button[data-act="delete"],
+.coral-imgmenu button[data-role="delete"] { color: #ffb3b3; }
+
+/* 새로 추가한 이미지 표시 */
+img.coral-added { outline: 1px dashed rgba(120, 200, 255, .6); outline-offset: 3px; }
 
 .coral-style__title {
   margin: 0 0 10px;
@@ -307,4 +376,199 @@ body.coral-editing { cursor: default; }
     width: auto;
     bottom: calc(var(--coral-fab-offset, 24px) + 72px);
   }
+}
+
+/* ---------- 반응형 미리보기 ---------- */
+.coral-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: flex;
+  flex-direction: column;
+  background: rgba(6, 11, 20, .88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.coral-preview__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+}
+
+.coral-preview__bar button {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(191, 216, 255, .25);
+  background: rgba(191, 216, 255, .08);
+  color: #e8f0f9;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.coral-preview__bar button:hover { border-color: rgba(252, 253, 179, .55); color: #fff; }
+.coral-preview__bar button.is-on {
+  background: rgba(252, 253, 179, .22);
+  border-color: rgba(191, 216, 255, .6);
+  color: #fff;
+}
+
+.coral-preview__bar [data-p="close"] {
+  position: absolute;
+  right: 20px;
+  top: 14px;
+}
+
+.coral-preview__w {
+  color: rgba(191, 216, 255, .6);
+  font-size: 12px;
+  letter-spacing: .08em;
+}
+
+.coral-preview__stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 24px 24px;
+}
+
+.coral-preview iframe {
+  height: 100%;
+  border: 1px solid rgba(191, 216, 255, .25);
+  border-radius: 18px;
+  background: #0a1220;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+  transition: width .25s ease;
+}
+
+.coral-bar button:disabled {
+  opacity: .35;
+  cursor: default;
+  border-color: rgba(191, 216, 255, .12);
+  background: rgba(191, 216, 255, .04);
+}
+
+@media (max-width: 560px) {
+  .coral-preview__bar { padding: 10px; gap: 6px; flex-wrap: wrap; }
+  .coral-preview__bar [data-p="close"] { position: static; }
+  .coral-preview__stage { padding: 0 10px 10px; }
+}
+
+/* ---------- 자동 저장 표시 ---------- */
+.coral-draft {
+  font-size: 11px;
+  color: rgba(252, 253, 179, .75);
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.coral-draft[hidden] { display: none !important; }
+
+/* 이전 편집 내용 복원 안내 */
+.coral-draftbar {
+  position: fixed;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  z-index: 10003;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(252, 253, 179, .4);
+  background: rgba(12, 22, 38, .97);
+  color: #e8f0f9;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .5);
+}
+.coral-draftbar button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(191, 216, 255, .3);
+  background: rgba(191, 216, 255, .1);
+  color: #e8f0f9;
+  font-size: 12px;
+  cursor: pointer;
+}
+.coral-draftbar button[data-d="restore"] {
+  background: rgba(252, 253, 179, .2);
+  border-color: rgba(252, 253, 179, .5);
+  color: #fff;
+}
+
+/* ---------- 공유 링크 상자 ---------- */
+.coral-preview__share {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px 16px;
+  color: rgba(198, 219, 245, .8);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+}
+.coral-preview__share[hidden] { display: none !important; }
+.coral-preview__share input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(191, 216, 255, .28);
+  background: #0a1424;
+  color: #cfdcec;
+  font-size: 12px;
+}
+
+/* ---------- 공유된 미리보기(읽기 전용) ---------- */
+body[data-coral-shared] {
+  margin: 0;
+  background: #0a1220;
+  overflow: hidden;
+}
+
+.coral-shared {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #0a1220;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.coral-shared__bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(191, 216, 255, .16);
+  color: #e8f0f9;
+}
+.coral-shared__bar strong {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.coral-shared__bar span {
+  font-size: 12px;
+  color: rgba(198, 219, 245, .6);
+}
+
+.coral-shared__stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.coral-shared__stage iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #0b1220;
 }
