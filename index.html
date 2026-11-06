@@ -7,9 +7,7 @@
        heromain/  (영상·이미지·아이콘)
        detail.html
      ============================================================ -->
-<html lang="ko">
-
-<head>
+<html lang="ko"><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>시작이 닿는 곳</title>
@@ -23,23 +21,23 @@
   <link rel="icon" href="./heromain/icon.png" sizes="32x32">
 </head>
 
-<body>
+<body class="coral-editing">
 
   <!-- 1. 헤더 : 항상 보이는 캡슐 메뉴 ------------------------
        메뉴를 늘리려면 <a> 한 줄만 추가 -->
-  <header class="header">
+  <header class="header on">
     <a class="logo" href="#"></a>
     <nav class="nav">
-      <a href="#about">소개</a>
-      <a href="#work">이력 및 수상</a>
-      <a href="#personal">개인작업</a>
+      <a href="#about" class="">소개</a>
+      <a href="#work" class="">이력 및 수상</a>
+      <a href="#personal" class="active">개인작업</a>
     </nav>
   </header>
 
   <!-- 2. 히어로 : 배경 영상 ----------------------------------
        영상 교체 : heromain/hero-loop.mp4 를 같은 이름으로 교체 -->
   <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline poster="./heromain/poster.jpg">
+    <video class="hero-video" autoplay="" muted="" loop="" playsinline="" poster="./heromain/poster.jpg">
       <source src="./heromain/hero-loop.mp4" type="video/mp4">
     </video>
   </section>
@@ -64,7 +62,7 @@
         <div>
 
           <article>
-            <h3 class="sub">연락처</h3>
+            <h3 class="sub" style="--i: 0;">연락처</h3>
             <ul class="timeline">
               <li>
                 <span>Phone</span>
@@ -78,7 +76,7 @@
           </article>
 
           <article>
-            <h3 class="sub">학력</h3>
+            <h3 class="sub" style="--i: 1;">학력</h3>
             <ul class="timeline">
               <li><span>2026 — 2027</span><strong>전주 이젠 컴퓨터 아트 <em>AI 뉴미디어 과정 수료</em></strong></li>
               <li><span>2012 — 2016</span><strong>김제 폴리텍 V대학 <em>금형과 수료</em></strong></li>
@@ -87,7 +85,7 @@
 
           <!-- 기술 : <li> 한 줄을 복사해서 추가 -->
           <article>
-            <h3 class="sub">기술 및 AI</h3>
+            <h3 class="sub" style="--i: 2;">기술 및 AI</h3>
             <ul class="skills">
               <li><img src="./heromain/skill icons/PS.gif" alt="포토샵"><span>포토샵</span></li>
               <li><img src="./heromain/skill icons/ID.gif" alt="인디자인"><span>인디자인</span></li>
@@ -105,7 +103,7 @@
         <div>
 
           <article>
-            <h3 class="sub">자격증</h3>
+            <h3 class="sub" style="--i: 3;">자격증</h3>
             <ul class="timeline">
               <li><span>2026.12</span><strong>웹디자인개발기능사 <em>한국산업인력공단</em></strong></li>
               <li><span>2026.09</span><strong>컴퓨터그래픽스기능사 <em>한국산업인력공단</em></strong></li>
@@ -115,7 +113,7 @@
           </article>
 
           <article>
-            <h3 class="sub">경력 및 수상</h3>
+            <h3 class="sub" style="--i: 4;">경력 및 수상</h3>
             <ul class="timeline">
               <li>
                 <span>2019 — 현재</span>
@@ -146,7 +144,7 @@
       <h2>이력 및 수상</h2>
 
       <div class="slider-container">
-        <button class="slider-btn prev-btn" aria-label="이전">&#10094;</button>
+        <button class="slider-btn prev-btn" aria-label="이전">❮</button>
 
         <ul class="slider-track center-track">
           <li class="slider-item">
@@ -172,7 +170,7 @@
           </li>
         </ul>
 
-        <button class="slider-btn next-btn" aria-label="다음">&#10095;</button>
+        <button class="slider-btn next-btn" aria-label="다음">❯</button>
       </div>
     </section>
 
@@ -181,7 +179,7 @@
       <h2>개인작업</h2>
 
       <div class="slider-container">
-        <button class="slider-btn prev-btn" aria-label="이전">&#10094;</button>
+        <button class="slider-btn prev-btn" aria-label="이전">❮</button>
 
         <ul class="slider-track center-track">
           <li class="slider-item">
@@ -193,7 +191,7 @@
           </li>
         </ul>
 
-        <button class="slider-btn next-btn" aria-label="다음">&#10095;</button>
+        <button class="slider-btn next-btn" aria-label="다음">❯</button>
       </div>
     </section>
 
@@ -211,6 +209,6 @@
 
   <script src="site-editor.js"></script>
 
-</body>
 
-</html>
+
+</body></html>
