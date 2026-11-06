@@ -1,0 +1,303 @@
+/* ============================================================
+   site-editor.css v2 — 웹 편집기 UI
+   ============================================================ */
+
+/* ---------- 편집 중 표시 ---------- */
+[contenteditable="true"] {
+  outline: 1px dashed rgba(252, 253, 179, .55);
+  outline-offset: 5px;
+  border-radius: 3px;
+  transition: outline-color .15s, background .15s;
+}
+[contenteditable="true"]:hover { outline-color: rgba(252, 253, 179, .95); }
+[contenteditable="true"]:focus {
+  outline: 2px solid #fcfdb3;
+  background: rgba(252, 253, 179, .07);
+}
+
+/* 이미지 교체 대상 */
+img.coral-img {
+  cursor: pointer;
+  outline: 1px dashed rgba(191, 216, 255, .5);
+  outline-offset: 4px;
+  transition: outline-color .15s, transform .15s;
+}
+img.coral-img:hover {
+  outline: 2px solid #fcfdb3;
+  transform: scale(1.005);
+}
+
+/* 스타일 편집 대상 */
+.coral-sel {
+  outline: 2px solid #fcfdb3 !important;
+  outline-offset: 3px !important;
+}
+
+/* ---------- 우측 하단 플로팅 버튼 ---------- */
+.coral-fab {
+  position: fixed;
+  right: 24px;
+  bottom: var(--coral-fab-offset, 24px);
+  z-index: 9998;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(191, 216, 255, .32);
+  background: linear-gradient(180deg, rgba(30, 52, 80, .96), rgba(14, 26, 42, .96));
+  color: #e8f0f9;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .08);
+  transition: transform .2s, border-color .2s, box-shadow .2s, color .2s;
+}
+.coral-fab:hover {
+  transform: translateY(-2px);
+  border-color: rgba(252, 253, 179, .6);
+  color: #fff;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .5), 0 0 32px rgba(120, 180, 245, .25);
+}
+.coral-fab svg { display: block; }
+
+/* ---------- 상단(하단) 툴바 ---------- */
+.coral-bar {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(191, 216, 255, .28);
+  background: rgba(10, 18, 32, .94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: #cfdcec;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .45);
+}
+
+.coral-bar .coral-status {
+  padding: 0 4px;
+  color: rgba(198, 219, 245, .78);
+  white-space: nowrap;
+}
+.coral-bar .coral-status.is-error { color: #ff9b9b; }
+
+.coral-bar button {
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(191, 216, 255, .25);
+  background: rgba(191, 216, 255, .08);
+  color: #e8f0f9;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.coral-bar button:hover {
+  background: rgba(252, 253, 179, .16);
+  border-color: rgba(252, 253, 179, .5);
+  color: #fff;
+}
+.coral-bar button.is-on {
+  background: rgba(252, 253, 179, .22);
+  border-color: rgba(252, 253, 179, .6);
+  color: #fff;
+}
+
+/* ---------- 스타일 패널 ---------- */
+.coral-style {
+  position: fixed;
+  right: 24px;
+  bottom: calc(var(--coral-fab-offset, 24px) + 60px);
+  z-index: 9999;
+  width: 236px;
+  padding: 16px 16px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(191, 216, 255, .28);
+  background: rgba(12, 22, 38, .97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #d6e2f0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .55);
+}
+
+.coral-style__title {
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(191, 216, 255, .18);
+  font-size: 12px;
+  color: #fcfdb3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coral-style label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: rgba(198, 219, 245, .85);
+}
+
+.coral-style input[type="number"],
+.coral-style select {
+  width: 100px;
+  padding: 5px 7px;
+  border-radius: 7px;
+  border: 1px solid rgba(191, 216, 255, .25);
+  background: #0a1424;
+  color: #e8f0f9;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.coral-style input[type="color"] {
+  width: 44px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid rgba(191, 216, 255, .25);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.coral-style__row {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.coral-style__row button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(191, 216, 255, .25);
+  background: rgba(191, 216, 255, .1);
+  color: #e8f0f9;
+  font-size: 12px;
+  cursor: pointer;
+}
+.coral-style__row button:hover { border-color: #fff; }
+
+/* ---------- 토큰 입력 창 ---------- */
+.coral-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4, 9, 18, .74);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.coral-modal__box {
+  width: min(430px, 100%);
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(191, 216, 255, .3);
+  background: #0f1c2e;
+  color: #d6e2f0;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .55);
+}
+
+.coral-modal__box h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  color: #eef4fb;
+}
+
+.coral-modal__box p {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(198, 219, 245, .8);
+}
+
+.coral-modal__box input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(191, 216, 255, .28);
+  background: #0a1424;
+  color: #e8f0f9;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+.coral-modal__box input:focus {
+  outline: 2px solid rgba(252, 253, 179, .5);
+  outline-offset: 1px;
+}
+
+.coral-modal__row {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.coral-modal__row button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(191, 216, 255, .3);
+  background: rgba(191, 216, 255, .12);
+  color: #e8f0f9;
+  font-size: 13px;
+  cursor: pointer;
+}
+.coral-modal__row button:first-child {
+  background: rgba(252, 253, 179, .18);
+  border-color: rgba(252, 253, 179, .5);
+  color: #fff;
+}
+.coral-modal__row button:hover { border-color: #fff; }
+
+.coral-hint {
+  margin: 14px 0 0 !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  color: rgba(198, 219, 245, .55) !important;
+}
+
+/* 편집 중에는 페이지 스크롤을 방해하지 않도록 */
+body.coral-editing { cursor: default; }
+
+/* ---------- 모바일 ---------- */
+@media (max-width: 560px) {
+  .coral-fab {
+    right: 14px;
+    padding: 11px 15px;
+    font-size: 13px;
+  }
+
+  .coral-bar {
+    left: 8px;
+    right: 8px;
+    bottom: 64px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .coral-bar .coral-status { width: 100%; text-align: center; }
+
+  .coral-style {
+    right: 10px;
+    left: 10px;
+    width: auto;
+    bottom: calc(var(--coral-fab-offset, 24px) + 72px);
+  }
+}
