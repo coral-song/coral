@@ -142,15 +142,13 @@
 
   </main>
 
-  <script>
+<script>
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id") || "1";
     const target = document.getElementById("item" + id);
     if (target) target.style.display = "block";
   </script>
-
-  <script src="./site-editor.js"></script>
-
+  <!-- 상세 페이지에서도 편집 기능이 작동하도록 연결 -->
+  <script src="script.js"></script>
 </body>
-
 </html>
