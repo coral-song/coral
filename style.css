@@ -313,8 +313,32 @@ body.detail-page img { width: 100%; border-radius: 10px; border: 1px solid var(-
 }
 
 /* ==========================================================
-   [19] 간격 조절 패널 (.grid-editor) 및 통합 편집기 스타일
+   [19] 글자 간격 연동 변수 및 통합 편집기·간격 조절 패널 스타일
    ========================================================== */
+
+/* 간격 조절 패널과 연동되는 글자 사이 여백 */
+.slider-item strong {
+  margin-top: var(--thumb-title-top, 12px);
+  margin-bottom: var(--thumb-text-gap, 8px);
+}
+.slider-item span {
+  display: inline-block;
+}
+.timeline strong em {
+  margin-top: var(--tl-sub-gap, 4px);
+}
+.timeline li {
+  position: relative;
+  padding: var(--tl-row-gap, 6px) 0;
+}
+.about-grid article + article {
+  margin-top: var(--article-gap, 24px);
+}
+.skills li {
+  position: relative;
+}
+
+/* 우측 하단 간격 조절 패널 */
 .grid-editor {
   position: fixed;
   bottom: 76px;
@@ -337,9 +361,80 @@ body.detail-page img { width: 100%; border-radius: 10px; border: 1px solid var(-
   box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
   transition: background .2s, border-color .2s;
 }
+.ge-toggle:hover, .ed-btn:hover { background: #162a45; border-color: #fff; }
+.ed-save { background: #1d7ac2; border-color: #1d7ac2; }
 
-.ge-toggle:hover, .ed-btn:hover {
-  background: #162a45;
+.ge-panel {
+  margin-top: 8px;
+  padding: 16px;
+  width: 290px;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-radius: 14px;
+  background: rgba(10, 18, 32, .95);
+  border: 1px solid rgba(191, 216, 255, .25);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .5);
+}
+.ge-title { margin: 10px 0 8px; font-size: 13px; color: #fcfdb3; font-weight: 700; }
+.ge-title:first-child { margin-top: 0; }
+.ge-row { display: grid; grid-template-columns: 92px 1fr 44px; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; }
+.ge-btns { display: flex; gap: 8px; margin-top: 12px; }
+.ge-btn { flex: 1; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: #14202e; color: #fff; cursor: pointer; font-size: 12px; }
+.ge-note { margin: 10px 0 0; font-size: 11px; color: var(--muted); text-align: center; }
+
+/* 하단 편집 모드 바 */
+#admin-edit-bar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 상단 선택 글자 개별 간격 미니 조절바 */
+#text-space-bar {
+  position: fixed;
+  top: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(10, 18, 32, .95);
+  border: 1px solid #fcfdb3;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .6);
+  font-size: 12px;
+  color: #fff;
+  white-space: nowrap;
+}
+#text-space-bar label { display: inline-flex; align-items: center; gap: 6px; }
+#text-space-bar input[type="number"] {
+  width: 54px; padding: 4px 6px; border-radius: 6px;
+  border: 1px solid rgba(191, 216, 255, .3); background: #14202e; color: #fff; font-size: 12px;
+}
+
+/* 편집 모드 하이라이트 및 추가/삭제 버튼 */
+.ed-editable-highlight { outline: 1px dashed rgba(29, 122, 194, .75) !important; outline-offset: 2px; border-radius: 4px; }
+.ed-editable-highlight:focus { outline: 2px solid #fcfdb3 !important; background: rgba(29, 122, 194, .15); }
+.ed-img-highlight { outline: 2px dashed #fcfdb3 !important; cursor: pointer !important; }
+
+.ed-add-inline {
+  display: inline-block; margin-top: 10px; margin-right: 6px; padding: 6px 12px;
+  border-radius: 6px; border: 1px dashed var(--muted);
+  background: rgba(29, 122, 194, .15); color: #bfd8ff; font-size: 12px; cursor: pointer;
+}
+.ed-add-inline:hover { background: rgba(29, 122, 194, .3); color: #fff; }
+
+.ed-del-btn {
+  position: absolute; top: 2px; right: 2px; width: 20px; height: 20px;
+  border-radius: 50%; border: none; background: #e03131; color: #fff;
+  font-weight: 700; font-size: 12px; line-height: 1; cursor: pointer; z-index: 20;
+}
   border-color: #fff;
 }
 
