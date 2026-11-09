@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>송산호 | 작업 상세</title>
+  <title>시작이 닿는 곳 | 작업 상세</title>
 
   <!-- 탭 아이콘 -->
   <link rel="icon" href="./heromain/icon.png" sizes="32x32">
@@ -13,8 +13,6 @@
   <link rel="stylesheet" href="./style.css">
   <!-- 2. 상세페이지 비주얼 시스템 (반드시 style.css 뒤에) -->
   <link rel="stylesheet" href="./detail-visual.css">
-  <link rel="stylesheet" href="./edit-link.css">
-  <link rel="stylesheet" href="./site-editor.css">
 
   <style>
     /* 주소에 따라 선택된 번호만 보여줍니다 */
@@ -44,28 +42,25 @@
           <img src="./상세페이지/공모전_1.png" alt="국립생태원 AI 생태 이야기 영상 공모전 포스터">
         </div>
       </div>
-      </section>
 
       <h2>참여계기</h2>
       <p>생성형 AI로 기획·이미지·영상·편집을 혼자 도전해 보는 계기를 찾고 있던 중에, 결과를 검증받을 수 있는
         공모전을 찾게 되어 도전해 보았고 그 결과 대상을 수상하였습니다.</p>
-        <div class="d-panel">
-          <div class="d-media is-tinted">
-            <img src="./상세페이지/공모전_2.png" alt="클레이 애니메이션 스타일 장면">
-          </div>
+      <div class="d-panel">
+        <div class="d-media is-tinted">
+          <img src="./상세페이지/공모전_2.png" alt="클레이 애니메이션 스타일 장면">
         </div>
-      </section>
+      </div>
 
       <h2>기획의도</h2>
       <p>환경보호 실천이라는 주제는 많이 쓰인 내용이라 생각해서 같은 내용을 말하기보다는, 바라보는 방식의
         차별점을 주기 위해 재밌는 시각에서 바라보면 어떨까 하는 생각에 어릴 때 즐겨봤던 클레이 애니메이션
         스타일과 미술작품이라는 컨셉을 생각하게 되었습니다.</p>
-        <div class="d-panel">
-          <div class="d-media is-tinted">
-            <img src="./상세페이지/공모전_3.png" alt="영상 제작 과정 화면">
-          </div>
+      <div class="d-panel">
+        <div class="d-media is-tinted">
+          <img src="./상세페이지/공모전_3.png" alt="영상 제작 과정 화면">
         </div>
-      </section>
+      </div>
 
       <h2>제작과정</h2>
       <p>요구사항 : 원본캐릭터를 응용, 9:16비율<br>
@@ -75,10 +70,8 @@
     </div>
 
     <!-- ====================================================
-         참고 : 이력·웹툰 이미지는 현재 주소에서 404가 나옵니다.
-         ./detail/ 폴더에 실제 파일을 올린 뒤 경로를 확인하세요.
+         2. 출판편집
          ==================================================== -->
-
     <div id="item2" class="detail-item">
       <h1>출판편집</h1>
 
@@ -110,6 +103,9 @@
         사용 프로그램 : 포토샵(Photoshop), 일러스트레이터(Illustrator), 인디자인(InDesign)</p>
     </div>
 
+    <!-- ====================================================
+         3. 웹툰제작
+         ==================================================== -->
     <div id="item3" class="detail-item">
       <h1>웹툰제작</h1>
 
@@ -134,21 +130,24 @@
       <p>기존 출판 만화를 모바일 스크롤 환경에 맞춘 웹툰 버전으로 재편집하는 작업을 진행하였습니다.</p>
     </div>
 
-    <footer class="footer">
-      <p class="edit-link">
-        <a href="https://github.dev/coral-song/coral/blob/main/detail.html" target="_blank" rel="noopener">이 페이지 편집</a>
-      </p>
-    </footer>
-
   </main>
 
-<script>
+  <!-- 푸터 : 여기서 편집을 눌러도 VS Code로 가지 않고 사이트 내 편집기가 켜집니다 -->
+  <footer class="footer" style="display:flex; justify-content:space-between; align-items:center;">
+    <p>sanho_song ｜ sansam314@naver.com</p>
+    <button type="button" class="footer-edit-trigger ed-btn" data-editor-ui="true">✏️ 사이트 내 편집</button>
+  </footer>
+
+  <script>
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id") || "1";
     const target = document.getElementById("item" + id);
     if (target) target.style.display = "block";
   </script>
-  <!-- 상세 페이지에서도 편집 기능이 작동하도록 연결 -->
+
+  <!-- 통합 편집 스크립트 연결 -->
   <script src="script.js"></script>
+
 </body>
+
 </html>
