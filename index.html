@@ -1,13 +1,5 @@
 <!DOCTYPE html>
-<!-- ============================================================
-     송산호 포트폴리오 — index.html
-     ------------------------------------------------------------
-     같은 폴더에 두는 파일
-       index.html  style.css  script.js  header.js  editor.js
-       heromain/  (영상·이미지·아이콘)
-       detail.html
-     ============================================================ -->
-<html lang="ko"><head>
+<html lang="ko" style="--about-gap-x: 200px; --about-gap-y: 40px; --about-width: 1300px; --coral-fab-offset: 92px;"><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>시작이 닿는 곳</title>
@@ -25,12 +17,12 @@
 
   <!-- 1. 헤더 : 항상 보이는 캡슐 메뉴 ------------------------
        메뉴를 늘리려면 <a> 한 줄만 추가 -->
-  <header class="header on" style="--x: 111.0078125px;">
+  <header class="header" style="--x: 183.0078125px;">
     <a class="logo" href="#"></a>
     <nav class="nav">
-      <a href="#about">소개</a>
-      <a href="#work">이력 및 수상</a>
-      <a href="#personal" class="active">개인작업</a>
+      <a href="#about" class="active">소개</a>
+      <a href="#work" class="">이력 및 수상</a>
+      <a href="#personal" class="">개인작업</a>
     </nav>
   </header>
 
@@ -46,7 +38,7 @@
   <main class="below">
 
     <!-- 3-1. 소개 -->
-    <section class="section" id="about">
+    <section class="section show" id="about">
 
       <!-- 상단 문구 : 여기 글자만 바꾸면 됩니다 -->
       <h1 class="intro-head">화려한 시안보다 현장에서 계속 쓰이는 결과물을 목표로 합니다.</h1>
@@ -83,27 +75,21 @@
             </ul>
           </article>
 
-         <!-- 기술 : 디자인·영상 툴 -->
+          <!-- 기술 : <li> 한 줄을 복사해서 추가 -->
           <article>
-            <h3 class="sub">기술</h3>
-            <ul class="skills">
+            <h3 class="sub" style="--i: 2;">기술 및 AI</h3>
+            <ul class="skills" style="margin-top: 16px;">
               <li><img src="./heromain/skill icons/PS.gif" alt="포토샵"><span>포토샵</span></li>
               <li><img src="./heromain/skill icons/ID.gif" alt="인디자인"><span>인디자인</span></li>
               <li><img src="./heromain/skill icons/AI.gif" alt="일러스트레이터"><span>일러스트<br>레이터</span></li>
               <li><img src="./heromain/skill icons/PR.gif" alt="프리미어 프로"><span>프리미어 프로</span></li>
-              <li><img src="./heromain/skill icons/AE.gif" alt="애프터 이펙트"><span>애프터 이펙트</span></li>
+              <li><img src="./heromain/skill icons/AE.gif" alt="애프터 이펙트"><span class="coral-sel">애프터 이펙트</span></li>
               <li><img src="./heromain/skill icons/FG.gif" alt="피그마"><span>피그마</span></li>
-            </ul>
-          </article>
-
-          <!-- AI : 생성형 AI 툴 분리 -->
-          <article>
-            <h3 class="sub">AI</h3>
-            <ul class="skills">
               <li><img src="./heromain/skill icons/HF.gif" alt="Higgsfield AI"><span>힉스필드</span></li>
-              <li><img src="./heromain/skill icons/GM.gif" alt="제미나이"><span>제미나이</span></li>
+              <li class=""><img src="./heromain/skill icons/GM.gif" alt="제미나이"><span>제미나이</span></li>
             </ul>
           </article>
+        </div>
 
         <!-- 오른쪽 컬럼 : 자격증 → 경력 -->
         <div>
@@ -152,24 +138,24 @@
       <div class="slider-container">
         <button class="slider-btn prev-btn" aria-label="이전">❮</button>
 
-        <ul class="slider-track center-track" style="margin-bottom: 16px; width: 1440%; margin-top: 18px; letter-spacing: 0px; line-height: 1.5;">
-          <li class="slider-item">
+        <ul class="slider-track center-track" style="margin-bottom: 16px; width: 1440px; margin-top: 18px; letter-spacing: 0px; line-height: 2.05; font-size: 21px;">
+          <li class="slider-item" style="position: relative;">
             <a target="_blank" rel="noopener" href="detail.html?id=1" style="margin-top: 0px; position: relative; left: -4px; line-height: 1.2;">
-              <img class="thumb" src="./heromain/수상및이력/03수상.png" alt="수상작 1">
+              <img class="thumb" src="./heromain/수상및이력/03수상.png" alt="수상작 1" style="width: 250px;">
               <strong>국립생태원<br>AI 영상 공모전</strong>
               <span>공모전-수상</span>
             </a>
           </li>
-          <li class="slider-item">
+          <li class="slider-item" style="position: relative;">
             <a target="_blank" rel="noopener" href="detail.html?id=2">
-              <img class="thumb" src="./heromain/수상및이력/01이력.png" alt="출판">
+              <img class="thumb" src="./heromain/수상및이력/01이력.png" alt="출판" style="width: 250px;">
               <strong>출판편집</strong>
               <span>이력</span>
             </a>
           </li>
-          <li class="slider-item">
-            <a target="_blank" rel="noopener" href="detail.html?id=3">
-              <img class="thumb" src="./heromain/수상및이력/02이력.png" alt="웹툰">
+          <li class="slider-item" style="position: relative;">
+            <a target="_blank" rel="noopener" href="detail.html?id=3" class="">
+              <img class="thumb" src="./heromain/수상및이력/02이력.png" alt="웹툰" style="width: 250px;">
               <strong>웹툰제작</strong>
               <span>이력</span>
             </a>
@@ -188,9 +174,9 @@
         <button class="slider-btn prev-btn" aria-label="이전">❮</button>
 
         <ul class="slider-track center-track">
-          <li class="slider-item">
+          <li class="slider-item" style="position: relative;">
             <a href="detail.html?id=4">
-              <img class="thumb" src="./heromain/banner.jpg" alt="개인작업 1">
+              <img class="thumb" src="./heromain/banner.jpg" alt="개인작업 1" style="width: 250px;">
               <strong>브랜딩 작업</strong>
               <span>2026</span>
             </a>
@@ -213,10 +199,11 @@
   <!-- 모든 동작이 script.js 한 파일에 들어 있습니다 -->
   <script src="script.js"></script>
 
-  <script src="site-editor.js"></script>
+  <script src="site-editor.js"></script><input type="file" accept="image/*" data-coral-ui="file" style="display: none;"><div class="coral-imgmenu" data-coral-ui="imgmenu" style="left: 464px; top: 715px;" hidden=""><button type="button" data-i="replace">교체</button><button type="button" data-i="insert">아래에 추가</button><button type="button" data-i="delete">삭제</button></div><div class="coral-style" data-coral-ui="style" hidden=""><p class="coral-style__title" data-sel="">span.ed-editable-highlight.coral-sel</p><div class="coral-style__scroll"><p class="coral-style__group">글자</p><label>크기 <span><input type="number" data-p="fontSize" step="1" min="8" max="200">px</span></label><label>색 <input type="color" data-p="color"></label><label>폰트 <select data-p="fontFamily"><option value="">그대로</option><option value="Eulyoo, serif">을유 (본문)</option><option value="system-ui, sans-serif">시스템 고딕</option></select></label><label>줄 간격 <input type="number" data-p="lineHeight" step="0.05" min="0.8" max="3"></label><label>자간 <span><input type="number" data-p="letterSpacing" step="0.5" min="-5" max="20">px</span></label><label>정렬 <select data-p="textAlign"><option value="">그대로</option><option value="left">왼쪽</option><option value="center">가운데</option><option value="right">오른쪽</option></select></label><p class="coral-style__group">상자</p><label>배경 <span class="coral-inline"><input type="color" data-p="backgroundColor"><button type="button" data-act="nobg">없음</button></span></label><label>너비 <span class="coral-inline"><input type="number" data-p="width" step="10"><select data-unit="width"><option value="px">px</option><option value="%">%</option></select></span></label><label>위 여백 <span><input type="number" data-p="marginTop" step="2">px</span></label><label>아래 여백 <span><input type="number" data-p="marginBottom" step="2">px</span></label><label>안쪽 여백 <span><input type="number" data-p="padding" step="2">px</span></label><p class="coral-style__group">위치</p><label>좌우 이동 <span><input type="number" data-p="offsetX" step="4">px</span></label><label>위아래 이동 <span><input type="number" data-p="offsetY" step="4">px</span></label></div><div class="coral-style__row"><button type="button" data-act="reset">초기화</button><button type="button" data-act="close">닫기</button></div></div><div class="coral-preview" data-coral-ui="preview" hidden=""><div class="coral-preview__bar"><button type="button" data-size="390">모바일</button><button type="button" data-size="834">태블릿</button><button type="button" data-size="1280">데스크톱</button><span class="coral-preview__w" data-w="">390px</span><button type="button" data-share="1">공유 링크</button><button type="button" data-p="close">닫기</button></div><div class="coral-preview__stage"><iframe title="미리보기"></iframe></div><div class="coral-preview__share" data-sharebox="" hidden=""><input type="text" readonly=""><span>링크가 복사되었습니다</span></div></div><button type="button" class="coral-fab" data-coral-ui="fab" aria-label="편집 모드 시작" hidden=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20h4L18 10a2.5 2.5 0 0 0-3.5-3.5L4.5 16.5 4 20z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span>편집</span></button><div class="coral-bar" data-coral-ui="bar"><span class="coral-status" data-status="">스타일 · 요소를 클릭하세요</span><span class="coral-draft" data-draft="">자동 저장됨 · 오후 02:03</span><button type="button" data-act="edit" class="">글자</button><button type="button" data-act="style" class="is-on">스타일</button><button type="button" data-act="addimg">＋이미지</button><button type="button" data-act="undo" title="되돌리기 (Ctrl+Z)">↶</button><button type="button" data-act="redo" title="다시 실행 (Ctrl+Shift+Z)" disabled="">↷</button><button type="button" data-act="preview">미리보기</button><button type="button" data-act="save">저장</button><button type="button" data-act="cancel">취소</button><button type="button" data-act="token" title="GitHub 토큰">⚙</button></div>
 
 
 
 
 <whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch>
+
 </body></html>
