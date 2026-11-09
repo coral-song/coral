@@ -1,11 +1,35 @@
 /* ============================================================
-   script.js — 사이트 전체 동작 + 글자 간격 조절 + 통합 편집기
+   script.js — 사이트 전체 동작 + 사이트 내 직접 편집 시스템 (VS Code 실행 차단)
    ============================================================ */
 
 (function () {
   "use strict";
 
-  /* 1. 헤더 동작 */
+  const isDetailPage =
+    window.location.pathname.includes("detail.html") ||
+    document.body.classList.contains("detail-page");
+
+  /* ==========================================================
+     0. 브라우저에 임시 저장된 수정본이 있으면 페이지 로드시 자동 복원
+     ========================================================== */
+  const DRAFT_KEY = isDetailPage ? "draft_detail_main" : "draft_index_main";
+  const savedDraft = localStorage.getItem(DRAFT_KEY);
+  const mainContainer = document.querySelector("main");
+
+  if (savedDraft && mainContainer) {
+    mainContainer.innerHTML = savedDraft;
+    if (isDetailPage) {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id") || "1";
+      document.querySelectorAll(".detail-item").forEach((el) => (el.style.display = "none"));
+      const target = document.getElementById("item" + id);
+      if (target) target.style.display = "block";
+    }
+  }
+
+  /* ==========================================================
+     1. 헤더 & 소개 등장 & 슬라이더 좌우 이동
+     ========================================================== */
   const header = document.querySelector(".header");
   if (header) {
     header.addEventListener("mousemove", (e) => {
@@ -34,7 +58,6 @@
     });
   }
 
-  /* 2. 소개 섹션 등장 */
   const about = document.getElementById("about");
   if (about) {
     if (!("IntersectionObserver" in window)) {
@@ -54,7 +77,6 @@
     }
   }
 
-  /* 3. 슬라이더 좌우 버튼 */
   const STEP = 234;
   document.querySelectorAll(".slider-container").forEach((container) => {
     const track = container.querySelector(".slider-track");
@@ -65,7 +87,6 @@
     if (next) next.addEventListener("click", () => track.scrollBy({ left: STEP, behavior: "smooth" }));
   });
 
-  /* 4. 푸터 연도 및 별 애니메이션 딜레이 */
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
@@ -77,7 +98,7 @@
   refreshStarIndex();
 
   /* ==========================================================
-     5. 그리드 & 글자 간격 통합 조절 패널
+     2. 그리드 & 글자 간격 조절 패널 (메인 페이지용)
      ========================================================== */
   const root = document.documentElement;
   const STORE_KEY = "aboutGridAndTextSpacing";
@@ -104,9 +125,7 @@
   }
 
   function applyGrid() {
-    CONTROLS.forEach((c) => {
-      root.style.setProperty(c.cssVar, values[c.key] + "px");
-    });
+    CONTROLS.forEach((c) => root.style.setProperty(c.cssVar, values[c.key] + "px"));
   }
 
   function saveGrid() {
@@ -145,7 +164,6 @@
           <button class="ge-btn ge-copy" type="button">CSS 복사</button>
           <button class="ge-btn ge-reset" type="button">초기화</button>
         </div>
-        <p class="ge-note">값은 브라우저와 HTML에 저장됩니다</p>
       </div>`;
 
     document.body.appendChild(gridPanel);
@@ -208,7 +226,7 @@
   markActiveMenu();
 
   /* ==========================================================
-     6. 통합 편집 시스템 (개별 글자 간격 + 기술/AI 구역 분리·추가)
+     3. 사이트 내 직접 편집 시스템 (메인 & 상세페이지 통합)
      ========================================================== */
   const GITHUB_OWNER = "coral-song";
   const GITHUB_REPO = "coral";
@@ -217,38 +235,42 @@
   let isEditMode = false;
   let activeTextEl = null;
 
-  // 6-1. 하단 편집 툴바
+  // 3-1. 우측 하단 편집 컨트롤 바 생성
   const editBar = document.createElement("div");
   editBar.id = "admin-edit-bar";
   editBar.setAttribute("data-editor-ui", "true");
   editBar.innerHTML = `
     <button id="toggleEditBtn" type="button" class="ed-btn ed-primary">✏️ 편집 모드 켜기</button>
-    <button id="addDetailItemBtn" type="button" class="ed-btn" style="display:none;">➕ 새 작업물(ID) 생성</button>
+    <button id="saveLocalBtn" type="button" class="ed-btn" style="display:none;">💾 브라우저 임시저장</button>
+    <button id="resetLocalBtn" type="button" class="ed-btn" style="display:none;">↩️ 임시저장 초기화</button>
     <button id="downloadHtmlBtn" type="button" class="ed-btn" style="display:none;">📥 HTML 다운로드</button>
-    <button id="saveGithubBtn" type="button" class="ed-btn ed-save" style="display:none;">💾 깃허브 즉시 반영</button>
-    <button id="setTokenBtn" type="button" class="ed-btn" style="display:none;" title="깃허브 토큰 설정">🔑 토큰 설정</button>
+    <button id="saveGithubBtn" type="button" class="ed-btn ed-save" style="display:none;">🚀 깃허브에 즉시 반영</button>
+    <button id="setTokenBtn" type="button" class="ed-btn" style="display:none;" title="깃허브 토큰 설정">🔑 토큰</button>
   `;
   document.body.appendChild(editBar);
 
-  // 6-2. 상단 선택 글자 개별 간격 조절바
+  // 3-2. 상단 미니 조절바 (글자 간격 조절 + 상세페이지 항목 스위처)
   const textSpaceBar = document.createElement("div");
   textSpaceBar.id = "text-space-bar";
   textSpaceBar.setAttribute("data-editor-ui", "true");
   textSpaceBar.innerHTML = `
-    <strong id="tsTargetName" style="color:#fcfdb3;">선택한 글자 간격</strong>
-    <label>위 여백(px) <input type="number" id="tsMarginTop" step="1"></label>
-    <label>아래 여백(px) <input type="number" id="tsMarginBottom" step="1"></label>
-    <label>줄간격(배) <input type="number" id="tsLineHeight" step="0.1" min="0.8" max="3"></label>
+    <div id="detailSwitcherWrap" style="display:none; align-items:center; gap:6px; padding-right:10px; border-right:1px solid rgba(255,255,255,0.2);"></div>
+    <strong style="color:#fcfdb3;">선택 글자 간격</strong>
+    <label>위(px) <input type="number" id="tsMarginTop" step="1"></label>
+    <label>아래(px) <input type="number" id="tsMarginBottom" step="1"></label>
+    <label>행간 <input type="number" id="tsLineHeight" step="0.1" min="0.8" max="3"></label>
     <label>자간(px) <input type="number" id="tsLetterSpacing" step="0.5"></label>
     <button type="button" id="tsResetBtn" class="ge-btn" style="flex:none;">초기화</button>
   `;
   document.body.appendChild(textSpaceBar);
 
   const toggleEditBtn = document.getElementById("toggleEditBtn");
-  const addDetailItemBtn = document.getElementById("addDetailItemBtn");
+  const saveLocalBtn = document.getElementById("saveLocalBtn");
+  const resetLocalBtn = document.getElementById("resetLocalBtn");
   const downloadHtmlBtn = document.getElementById("downloadHtmlBtn");
   const saveGithubBtn = document.getElementById("saveGithubBtn");
   const setTokenBtn = document.getElementById("setTokenBtn");
+  const detailSwitcherWrap = document.getElementById("detailSwitcherWrap");
 
   const tsMarginTop = document.getElementById("tsMarginTop");
   const tsMarginBottom = document.getElementById("tsMarginBottom");
@@ -256,9 +278,97 @@
   const tsLetterSpacing = document.getElementById("tsLetterSpacing");
   const tsResetBtn = document.getElementById("tsResetBtn");
 
-  const isDetailPage = window.location.pathname.includes("detail.html") || document.body.classList.contains("detail-page");
+  // 3-3. 푸터의 편집 버튼이나 기존 vscode:// 링크 클릭 시 VS Code 실행을 막고 사이트 내 편집기 켜기
+  document.addEventListener(
+    "click",
+    (e) => {
+      const trigger = e.target.closest(
+        'a[href^="vscode:"], .footer-edit-trigger, [data-action="edit"]'
+      );
+      const footerEl = e.target.closest("footer a, footer button");
+      if (
+        trigger ||
+        (footerEl && footerEl.textContent.includes("편집"))
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleEditBtn.click();
+      }
+    },
+    true
+  );
 
-  // 선택한 글자 요소의 간격 값 불러오기
+  // 3-4. 상세페이지 상단 항목 전환 탭 (1번, 2번, 3번, + 새 상세페이지) 렌더링
+  function renderDetailSwitcher() {
+    if (!isDetailPage) return;
+    detailSwitcherWrap.style.display = isEditMode ? "flex" : "none";
+    detailSwitcherWrap.innerHTML = `<span style="color:#bfd8ff; font-weight:600;">상세페이지 전환:</span>`;
+
+    document.querySelectorAll(".detail-item").forEach((item) => {
+      const idNum = item.id.replace("item", "");
+      const h1Text = item.querySelector("h1")?.textContent.trim().slice(0, 8) || `항목 ${idNum}`;
+      const isVisible = item.style.display !== "none";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "ge-btn";
+      btn.style.cssText = `padding:4px 10px; font-weight:600; background:${isVisible ? "#1d7ac2" : "#14202e"};`;
+      btn.textContent = `${idNum}번 (${h1Text})`;
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".detail-item").forEach((el) => (el.style.display = "none"));
+        item.style.display = "block";
+        history.replaceState(null, "", `detail.html?id=${idNum}`);
+        renderDetailSwitcher();
+      });
+      detailSwitcherWrap.appendChild(btn);
+    });
+
+    const addNewPageBtn = document.createElement("button");
+    addNewPageBtn.type = "button";
+    addNewPageBtn.className = "ge-btn";
+    addNewPageBtn.style.cssText = "padding:4px 10px; background:#2b8a3e; color:#fff; font-weight:600;";
+    addNewPageBtn.textContent = "+ 새 ID 페이지";
+    addNewPageBtn.addEventListener("click", () => {
+      const nextNum = document.querySelectorAll(".detail-item").length + 1;
+      const newId = prompt("새로 만들 상세페이지 번호(id)를 입력하세요:", String(nextNum));
+      if (!newId) return;
+      const itemId = "item" + newId.trim();
+      document.querySelectorAll(".detail-item").forEach((el) => (el.style.display = "none"));
+
+      let targetDiv = document.getElementById(itemId);
+      if (!targetDiv) {
+        targetDiv = document.createElement("div");
+        targetDiv.id = itemId;
+        targetDiv.className = "detail-item";
+        targetDiv.innerHTML = `
+          <h1>새 작업물 제목을 입력하세요</h1>
+          <section class="d-fig">
+            <p class="d-case">CASE 0${newId.trim()}</p>
+            <p class="d-word" aria-hidden="true">PROJECT</p>
+            <div class="d-panel">
+              <div class="d-media is-tinted">
+                <img src="./heromain/banner.jpg" alt="작업 대표 이미지">
+              </div>
+            </div>
+            <ul class="d-tags">
+              <li>2026</li>
+              <li>카테고리</li>
+            </ul>
+          </section>
+          <h2>기획의도 및 작업 내용</h2>
+          <p>여기에 상세 설명을 클릭하여 자유롭게 작성하세요.</p>
+        `;
+        document.querySelector("main").appendChild(targetDiv);
+      }
+      targetDiv.style.display = "block";
+      history.replaceState(null, "", `detail.html?id=${newId.trim()}`);
+      enableElementEditing(document);
+      renderEditControls();
+      renderDetailSwitcher();
+    });
+    detailSwitcherWrap.appendChild(addNewPageBtn);
+  }
+
+  // 3-5. 선택한 글자 간격 실시간 조절
   document.addEventListener("click", (e) => {
     if (!isEditMode) return;
     if (e.target.closest("[data-editor-ui]")) return;
@@ -276,7 +386,6 @@
     }
   });
 
-  // 상단 미니 조절바 입력 시 선택한 글자 간격 즉시 반영
   tsMarginTop.addEventListener("input", () => {
     if (!activeTextEl) return;
     if (window.getComputedStyle(activeTextEl).display === "inline") activeTextEl.style.display = "inline-block";
@@ -301,7 +410,7 @@
     activeTextEl.style.letterSpacing = "";
   });
 
-  // 편집 모드일 때 링크 이동 차단
+  // 3-6. 편집 모드일 때 링크 이동 차단 및 유튜브 링크 수정
   document.addEventListener(
     "click",
     (e) => {
@@ -320,92 +429,86 @@
     true
   );
 
-  // 편집 모드일 때 이미지 클릭 시 경로 변경
+  // 3-7. 편집 모드일 때 이미지 클릭 시 경로 변경 또는 로컬 파일 불러오기
   document.addEventListener("click", (e) => {
     if (!isEditMode) return;
     const img = e.target.closest("img");
     if (!img || img.closest("[data-editor-ui]")) return;
+
     const currentSrc = img.getAttribute("src");
-    const newSrc = prompt("변경할 이미지 파일 경로(또는 URL)를 입력하세요:", currentSrc);
-    if (newSrc !== null && newSrc.trim() !== "") img.setAttribute("src", newSrc.trim());
+    const newSrc = prompt(
+      "변경할 이미지 경로를 입력하세요.\n(내 컴퓨터의 이미지 파일을 직접 고르려면 '파일' 이라고 입력하세요):",
+      currentSrc
+    );
+    if (!newSrc) return;
+
+    if (newSrc.trim() === "파일") {
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          img.setAttribute("src", ev.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
+      fileInput.click();
+    } else if (newSrc.trim() !== "") {
+      img.setAttribute("src", newSrc.trim());
+    }
   });
 
-  // 항목 추가/삭제 컨트롤 생성
+  // 3-8. 항목 추가 / 순서 이동 / 삭제 버튼 생성
   function renderEditControls() {
     document.querySelectorAll(".ed-temp-ctrl").forEach((el) => el.remove());
     if (!isEditMode) return;
 
-    // A. 타임라인 (.timeline) 이력 추가·삭제
+    // A. 메인페이지 타임라인 (.timeline)
     document.querySelectorAll(".timeline").forEach((ul) => {
       ul.querySelectorAll("li").forEach((li) => attachDeleteBtn(li));
-      const addBtn = document.createElement("button");
-      addBtn.type = "button";
-      addBtn.className = "ed-temp-ctrl ed-add-inline";
-      addBtn.setAttribute("data-editor-ui", "true");
-      addBtn.textContent = "+ 이력 항목 추가";
-      addBtn.addEventListener("click", () => {
+      const addBtn = createInlineBtn("+ 이력 항목 추가", () => {
         const li = document.createElement("li");
         li.innerHTML = `<span>기간/구분</span><strong>내용 제목 <em>보조 설명</em></strong>`;
+        ul.appendChild(li);
         enableElementEditing(li);
         attachDeleteBtn(li);
-        ul.appendChild(li);
       });
       ul.after(addBtn);
     });
 
-    // B. 기술 및 AI 아이콘 (.skills) 추가·삭제
+    // B. 메인페이지 스킬/AI 아이콘 (.skills)
     document.querySelectorAll(".skills").forEach((ul) => {
       ul.querySelectorAll("li").forEach((li) => attachDeleteBtn(li));
-      const addSkillBtn = document.createElement("button");
-      addSkillBtn.type = "button";
-      addSkillBtn.className = "ed-temp-ctrl ed-add-inline";
-      addSkillBtn.setAttribute("data-editor-ui", "true");
-      addSkillBtn.textContent = "+ 아이콘 추가";
-      addSkillBtn.addEventListener("click", () => {
-        const imgPath = prompt("아이콘 이미지 경로를 입력하세요:", "./heromain/skill icons/GM.gif") || "./heromain/skill icons/GM.gif";
-        const name = prompt("프로그램 또는 AI 이름을 입력하세요:", "새 툴") || "새 툴";
+      const addSkillBtn = createInlineBtn("+ 아이콘 추가", () => {
+        const imgPath = prompt("아이콘 이미지 경로:", "./heromain/skill icons/GM.gif") || "./heromain/skill icons/GM.gif";
+        const name = prompt("이름:", "새 툴") || "새 툴";
         const li = document.createElement("li");
         li.innerHTML = `<img src="${imgPath.trim()}" alt="${name}"><span>${name}</span>`;
+        ul.appendChild(li);
         enableElementEditing(li);
         attachDeleteBtn(li);
-        ul.appendChild(li);
       });
       ul.after(addSkillBtn);
     });
 
-    // C. 소개 그리드 각 컬럼에 [새 소제목 구역(기술/AI/이력) 추가] 및 구역 삭제 버튼
+    // C. 메인페이지 소개 소제목 구역 (.about-grid > div)
     document.querySelectorAll(".about-grid > div").forEach((col) => {
       col.querySelectorAll("article").forEach((art) => {
         art.style.position = "relative";
         attachDeleteBtn(art);
       });
-
-      const addArtBtn = document.createElement("button");
-      addArtBtn.type = "button";
-      addArtBtn.className = "ed-temp-ctrl ed-add-inline";
-      addArtBtn.setAttribute("data-editor-ui", "true");
-      addArtBtn.style.marginTop = "20px";
-      addArtBtn.textContent = "➕ 새 소제목 구역(AI·기술·이력) 추가";
-      addArtBtn.addEventListener("click", () => {
-        const title = prompt("새 소제목 이름을 입력하세요 (예: AI, 기술, 수상 등):", "AI");
+      const addArtBtn = createInlineBtn("➕ 새 소제목 구역(AI·기술·이력) 추가", () => {
+        const title = prompt("새 소제목 이름 (예: AI, 기술, 수상):", "AI");
         if (!title) return;
-        const type = confirm("아이콘 격자 형태(기술/AI)로 만들까요?\n[확인] = 아이콘 격자 / [취소] = 텍스트 타임라인");
+        const isIconGrid = confirm("아이콘 격자 형태로 만들까요?\n[확인] = 아이콘 격자 / [취소] = 텍스트 타임라인");
         const art = document.createElement("article");
         art.style.position = "relative";
-        if (type) {
-          art.innerHTML = `
-            <h3 class="sub">${title.trim()}</h3>
-            <ul class="skills">
-              <li><img src="./heromain/skill icons/HF.gif" alt="힉스필드"><span>힉스필드</span></li>
-              <li><img src="./heromain/skill icons/GM.gif" alt="제미나이"><span>제미나이</span></li>
-            </ul>`;
-        } else {
-          art.innerHTML = `
-            <h3 class="sub">${title.trim()}</h3>
-            <ul class="timeline">
-              <li><span>2026</span><strong>항목 제목 <em>보조 설명</em></strong></li>
-            </ul>`;
-        }
+        art.innerHTML = isIconGrid
+          ? `<h3 class="sub">${title.trim()}</h3><ul class="skills"><li><img src="./heromain/skill icons/GM.gif" alt="아이콘"><span>새 아이콘</span></li></ul>`
+          : `<h3 class="sub">${title.trim()}</h3><ul class="timeline"><li><span>2026</span><strong>항목 제목 <em>보조 설명</em></strong></li></ul>`;
         col.insertBefore(art, addArtBtn);
         refreshStarIndex();
         enableElementEditing(art);
@@ -414,25 +517,18 @@
       col.appendChild(addArtBtn);
     });
 
-    // D. 슬라이더 (.slider-track) 썸네일 카드 추가·삭제
+    // D. 메인페이지 슬라이더 (.slider-track)
     document.querySelectorAll(".slider-track").forEach((track) => {
       track.querySelectorAll(".slider-item").forEach((item) => {
         item.style.position = "relative";
         attachDeleteBtn(item);
       });
-
-      const addCardBtn = document.createElement("button");
-      addCardBtn.type = "button";
-      addCardBtn.className = "ed-temp-ctrl ed-add-inline";
-      addCardBtn.setAttribute("data-editor-ui", "true");
-      addCardBtn.textContent = "+ 새 썸네일 카드 추가";
-      addCardBtn.addEventListener("click", () => {
-        const idNum = prompt("연결할 상세페이지 ID 번호를 입력하세요 (예: 4):", "4");
+      const addCardBtn = createInlineBtn("+ 새 썸네일 카드 추가", () => {
+        const idNum = prompt("연결할 상세페이지 ID 번호 (예: 4):", "4");
         if (!idNum) return;
-        const imgPath = prompt("썸네일 이미지 경로를 입력하세요:", "./heromain/banner.jpg") || "./heromain/banner.jpg";
-        const title = prompt("작품 제목을 입력하세요:", "새 프로젝트") || "새 프로젝트";
-        const tag = prompt("분류(연도/분야)를 입력하세요:", "2026") || "2026";
-
+        const imgPath = prompt("썸네일 이미지 경로:", "./heromain/banner.jpg") || "./heromain/banner.jpg";
+        const title = prompt("작품 제목:", "새 프로젝트") || "새 프로젝트";
+        const tag = prompt("분류(연도/분야):", "2026") || "2026";
         const li = document.createElement("li");
         li.className = "slider-item";
         li.style.position = "relative";
@@ -442,42 +538,116 @@
             <strong>${title}</strong>
             <span>${tag}</span>
           </a>`;
+        track.appendChild(li);
         enableElementEditing(li);
         attachDeleteBtn(li);
-        track.appendChild(li);
       });
       track.parentElement.after(addCardBtn);
     });
 
-    // E. 상세페이지 블록 추가
+    // E. 상세페이지 (.detail-item) 전용 사이트 내 편집 도구
     if (isDetailPage) {
+      // 키워드 태그 (.d-tags) 추가/삭제
+      document.querySelectorAll(".d-tags").forEach((ul) => {
+        ul.querySelectorAll("li").forEach((li) => {
+          li.style.position = "relative";
+          attachDeleteBtn(li);
+        });
+        const addTagBtn = createInlineBtn("+ 태그 추가", () => {
+          const li = document.createElement("li");
+          li.style.position = "relative";
+          li.textContent = "새 키워드";
+          ul.appendChild(li);
+          enableElementEditing(ul);
+          attachDeleteBtn(li);
+        });
+        ul.after(addTagBtn);
+      });
+
+      // 상세페이지 내부 요소 (이미지 패널, 소제목, 본문, 구분선) 개별 삭제 버튼
       document.querySelectorAll(".detail-item").forEach((itemBox) => {
-        const addSecBtn = document.createElement("button");
-        addSecBtn.type = "button";
-        addSecBtn.className = "ed-temp-ctrl ed-add-inline";
-        addSecBtn.setAttribute("data-editor-ui", "true");
-        addSecBtn.textContent = "+ 이미지·설명 블록 추가";
-        addSecBtn.addEventListener("click", () => {
-          const imgPath = prompt("추가할 이미지 경로를 입력하세요 (글만 추가하려면 빈칸):", "./상세페이지/공모전_1.png");
-          const wrap = document.createDocumentFragment();
-          if (imgPath && imgPath.trim() !== "") {
+        Array.from(itemBox.children).forEach((child) => {
+          if (child.tagName === "H1" || child.classList.contains("ed-temp-ctrl")) return;
+          child.style.position = "relative";
+          attachDeleteBtn(child);
+        });
+
+        // 상세페이지 하단 블록 추가 도구모음
+        const toolWrap = document.createElement("div");
+        toolWrap.className = "ed-temp-ctrl";
+        toolWrap.setAttribute("data-editor-ui", "true");
+        toolWrap.style.cssText = "margin-top:32px; padding:16px; border:1px dashed #1d7ac2; border-radius:12px; display:flex; flex-wrap:wrap; gap:8px;";
+
+        toolWrap.appendChild(
+          createInlineBtn("➕ 소제목 + 본문 추가", () => {
+            const h2 = document.createElement("h2");
+            h2.textContent = "새 소제목을 입력하세요";
+            const p = document.createElement("p");
+            p.textContent = "여기에 상세 설명을 클릭하여 입력하세요.";
+            itemBox.insertBefore(h2, toolWrap);
+            itemBox.insertBefore(p, toolWrap);
+            enableElementEditing(itemBox);
+            renderEditControls();
+          })
+        );
+
+        toolWrap.appendChild(
+          createInlineBtn("🖼️ 이미지 패널 추가", () => {
+            const imgPath = prompt("추가할 이미지 경로:", "./상세페이지/공모전_1.png") || "./상세페이지/공모전_1.png";
             const panel = document.createElement("div");
             panel.className = "d-panel";
+            panel.style.marginTop = "24px";
             panel.innerHTML = `<div class="d-media is-tinted"><img src="${imgPath.trim()}" alt="상세 이미지"></div>`;
-            wrap.appendChild(panel);
-          }
-          const h2 = document.createElement("h2");
-          h2.textContent = "소제목을 입력하세요";
-          const p = document.createElement("p");
-          p.textContent = "여기에 상세 설명을 입력하세요.";
-          wrap.appendChild(h2);
-          wrap.appendChild(p);
-          itemBox.insertBefore(wrap, addSecBtn);
-          enableElementEditing(itemBox);
-        });
-        itemBox.appendChild(addSecBtn);
+            itemBox.insertBefore(panel, toolWrap);
+            enableElementEditing(itemBox);
+            renderEditControls();
+          })
+        );
+
+        toolWrap.appendChild(
+          createInlineBtn("🎴 CASE 배너 박스(.d-fig) 추가", () => {
+            const fig = document.createElement("section");
+            fig.className = "d-fig";
+            fig.innerHTML = `
+              <p class="d-case">CASE 01</p>
+              <p class="d-word" aria-hidden="true">WORK</p>
+              <div class="d-panel">
+                <div class="d-media is-tinted">
+                  <img src="./heromain/banner.jpg" alt="작업 이미지">
+                </div>
+              </div>
+              <ul class="d-tags">
+                <li>2026</li>
+                <li>키워드</li>
+              </ul>`;
+            itemBox.insertBefore(fig, toolWrap);
+            enableElementEditing(itemBox);
+            renderEditControls();
+          })
+        );
+
+        toolWrap.appendChild(
+          createInlineBtn("➖ 구분선 추가", () => {
+            const hr = document.createElement("hr");
+            hr.className = "d-divider";
+            itemBox.insertBefore(hr, toolWrap);
+            renderEditControls();
+          })
+        );
+
+        itemBox.appendChild(toolWrap);
       });
     }
+  }
+
+  function createInlineBtn(label, onClick) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "ed-temp-ctrl ed-add-inline";
+    btn.setAttribute("data-editor-ui", "true");
+    btn.textContent = label;
+    btn.addEventListener("click", onClick);
+    return btn;
   }
 
   function attachDeleteBtn(targetEl) {
@@ -486,7 +656,7 @@
     delBtn.className = "ed-temp-ctrl ed-del-btn";
     delBtn.setAttribute("data-editor-ui", "true");
     delBtn.textContent = "×";
-    delBtn.title = "삭제";
+    delBtn.title = "이 항목 삭제";
     delBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -499,7 +669,8 @@
   }
 
   function enableElementEditing(rootEl) {
-    const editableSelectors = "h1, h2, h3, h4, p, strong, span, em, .d-tags li";
+    const editableSelectors =
+      "h1, h2, h3, h4, p, strong, span, em, .d-tags li, .d-case, .d-word, .yt-btn";
     rootEl.querySelectorAll(editableSelectors).forEach((el) => {
       if (el.closest("[data-editor-ui]")) return;
       el.contentEditable = isEditMode ? "true" : "false";
@@ -511,61 +682,45 @@
     });
   }
 
-  // 편집 모드 토글
+  // 3-9. 편집 모드 켜기 / 끄기
   toggleEditBtn.addEventListener("click", () => {
     isEditMode = !isEditMode;
     enableElementEditing(document);
     renderEditControls();
+    renderDetailSwitcher();
 
-    if (!isEditMode) {
+    if (isEditMode) {
+      textSpaceBar.style.display = "flex";
+    } else {
       textSpaceBar.style.display = "none";
       activeTextEl = null;
     }
 
     toggleEditBtn.textContent = isEditMode ? "🔒 편집 종료" : "✏️ 편집 모드 켜기";
+    saveLocalBtn.style.display = isEditMode ? "inline-block" : "none";
+    resetLocalBtn.style.display = isEditMode ? "inline-block" : "none";
     downloadHtmlBtn.style.display = isEditMode ? "inline-block" : "none";
     saveGithubBtn.style.display = isEditMode ? "inline-block" : "none";
     setTokenBtn.style.display = isEditMode ? "inline-block" : "none";
-    if (isDetailPage) addDetailItemBtn.style.display = isEditMode ? "inline-block" : "none";
   });
 
-  // 상세페이지 새 작업물 생성
-  addDetailItemBtn.addEventListener("click", () => {
-    const newId = prompt("새로 만들 상세페이지 번호(id)를 입력하세요 (예: 4):", "4");
-    if (!newId) return;
-    const itemId = "item" + newId.trim();
-    if (document.getElementById(itemId)) {
-      window.location.search = `?id=${newId.trim()}`;
-      return;
-    }
-    document.querySelectorAll(".detail-item").forEach((el) => (el.style.display = "none"));
-    const mainEl = document.querySelector("main");
-    const newDiv = document.createElement("div");
-    newDiv.id = itemId;
-    newDiv.className = "detail-item";
-    newDiv.style.display = "block";
-    newDiv.innerHTML = `
-      <h1>새 작업물 제목을 입력하세요</h1>
-      <section class="d-fig">
-        <p class="d-case">CASE 0${newId.trim()}</p>
-        <div class="d-panel">
-          <div class="d-media is-tinted">
-            <img src="./heromain/banner.jpg" alt="작업 대표 이미지">
-          </div>
-        </div>
-      </section>
-      <h2>기획의도</h2>
-      <p>여기에 상세 설명을 클릭하여 작성하세요.</p>`;
-    mainEl.appendChild(newDiv);
-    enableElementEditing(newDiv);
-    renderEditControls();
-    history.replaceState(null, "", `detail.html?id=${newId.trim()}`);
-  });
+  // 3-10. 저장용 깨끗한 HTML 추출
+  function getCleanMainHtml() {
+    const cloneMain = document.querySelector("main").cloneNode(true);
+    cloneMain.querySelectorAll("[data-editor-ui], .ed-temp-ctrl").forEach((el) => el.remove());
+    cloneMain.querySelectorAll("[contenteditable]").forEach((el) => el.removeAttribute("contenteditable"));
+    cloneMain.querySelectorAll(".ed-editable-highlight, .ed-img-highlight").forEach((el) => {
+      el.classList.remove("ed-editable-highlight", "ed-img-highlight");
+      if (el.classList.length === 0) el.removeAttribute("class");
+    });
+    return cloneMain.innerHTML;
+  }
 
-  // 깨끗한 HTML 추출
-  function getCleanHtml() {
+  function getCleanFullHtml() {
     const cloneDoc = document.documentElement.cloneNode(true);
-    cloneDoc.querySelectorAll("[data-editor-ui], .grid-editor, #admin-edit-bar, #text-space-bar, .ed-temp-ctrl").forEach((el) => el.remove());
+    cloneDoc
+      .querySelectorAll("[data-editor-ui], .grid-editor, #admin-edit-bar, #text-space-bar, .ed-temp-ctrl")
+      .forEach((el) => el.remove());
     cloneDoc.querySelectorAll("[contenteditable]").forEach((el) => el.removeAttribute("contenteditable"));
     cloneDoc.querySelectorAll(".ed-editable-highlight, .ed-img-highlight").forEach((el) => {
       el.classList.remove("ed-editable-highlight", "ed-img-highlight");
@@ -580,10 +735,27 @@
     return "<!DOCTYPE html>\n" + cloneDoc.outerHTML;
   }
 
-  // HTML 파일 다운로드
+  // 3-11. 브라우저 내 즉시 임시저장 (새로고침해도 유지)
+  saveLocalBtn.addEventListener("click", () => {
+    try {
+      localStorage.setItem(DRAFT_KEY, getCleanMainHtml());
+      alert("✅ 사이트 내에 즉시 저장되었습니다! (새로고침해도 유지됩니다)");
+    } catch (e) {
+      alert("저장 용량을 초과했거나 브라우저 저장이 제한되어 있습니다.");
+    }
+  });
+
+  resetLocalBtn.addEventListener("click", () => {
+    if (confirm("브라우저에 임시 저장된 수정본을 지우고 원본 파일 상태로 되돌릴까요?")) {
+      localStorage.removeItem(DRAFT_KEY);
+      location.reload();
+    }
+  });
+
+  // 3-12. HTML 파일 다운로드
   downloadHtmlBtn.addEventListener("click", () => {
     const currentFile = isDetailPage ? "detail.html" : "index.html";
-    const blob = new Blob([getCleanHtml()], { type: "text/html;charset=utf-8" });
+    const blob = new Blob([getCleanFullHtml()], { type: "text/html;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -592,22 +764,16 @@
     URL.revokeObjectURL(url);
   });
 
-  // 토큰 설정
+  // 3-13. 깃허브 토큰 설정 및 원클릭 반영
   setTokenBtn.addEventListener("click", () => {
     const currentToken = localStorage.getItem("gh_portfolio_token") || "";
-    const input = prompt("깃허브 Personal Access Token(github_pat_...)을 붙여넣으세요:", currentToken);
+    const input = prompt("깃허브 Personal Access Token(github_pat_...)을 입력하세요:", currentToken);
     if (input !== null) {
-      if (input.trim() === "") {
-        localStorage.removeItem("gh_portfolio_token");
-        alert("저장된 토큰이 삭제되었습니다.");
-      } else {
-        localStorage.setItem("gh_portfolio_token", input.trim());
-        alert("토큰이 저장되었습니다.");
-      }
+      if (input.trim() === "") localStorage.removeItem("gh_portfolio_token");
+      else localStorage.setItem("gh_portfolio_token", input.trim());
     }
   });
 
-  // 깃허브 저장
   saveGithubBtn.addEventListener("click", async () => {
     let token = localStorage.getItem("gh_portfolio_token");
     if (!token) {
@@ -618,22 +784,16 @@
     }
 
     const currentFile = isDetailPage ? "detail.html" : "index.html";
-    const updatedHtml = getCleanHtml();
+    const updatedHtml = getCleanFullHtml();
     const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${currentFile}`;
 
     try {
-      saveGithubBtn.textContent = "⏳ 저장 중...";
+      saveGithubBtn.textContent = "⏳ 반영 중...";
       const getRes = await fetch(`${apiUrl}?ref=${GITHUB_BRANCH}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (!getRes.ok) {
-        if (getRes.status === 401 || getRes.status === 403) {
-          localStorage.removeItem("gh_portfolio_token");
-          alert("토큰 권한이 없거나 만료되었습니다. 새 토큰을 입력해 주세요.");
-          return;
-        }
-        throw new Error(`파일 조회 실패 (${getRes.status})`);
-      }
+      if (!getRes.ok) throw new Error(`파일 조회 실패 (${getRes.status})`);
+
       const fileData = await getRes.json();
       const encodedContent = btoa(unescape(encodeURIComponent(updatedHtml)));
       const putRes = await fetch(apiUrl, {
@@ -650,11 +810,13 @@
         })
       });
       if (!putRes.ok) throw new Error(`업로드 실패 (${putRes.status})`);
-      alert(`✅ ${currentFile} 파일이 깃허브에 성공적으로 반영되었습니다!`);
+
+      localStorage.setItem(DRAFT_KEY, getCleanMainHtml());
+      alert(`✅ ${currentFile} 파일이 깃허브 저장소에 직접 반영되었습니다!`);
     } catch (err) {
-      alert("깃허브 저장 오류: " + err.message);
+      alert("깃허브 반영 실패: " + err.message + "\n[💾 브라우저 임시저장] 또는 [📥 HTML 다운로드]를 이용해 주세요.");
     } finally {
-      saveGithubBtn.textContent = "💾 깃허브 즉시 반영";
+      saveGithubBtn.textContent = "🚀 깃허브에 즉시 반영";
     }
   });
 })();
