@@ -25,12 +25,12 @@
 
   <!-- 1. 헤더 : 항상 보이는 캡슐 메뉴 ------------------------
        메뉴를 늘리려면 <a> 한 줄만 추가 -->
-  <header class="header on">
+  <header class="header on" style="--x: 111.0078125px;">
     <a class="logo" href="#"></a>
     <nav class="nav">
-      <a href="#about" class="">소개</a>
-      <a href="#work" class="active">이력 및 수상</a>
-      <a href="#personal" class="">개인작업</a>
+      <a href="#about">소개</a>
+      <a href="#work">이력 및 수상</a>
+      <a href="#personal" class="active">개인작업</a>
     </nav>
   </header>
 
@@ -86,7 +86,7 @@
           <!-- 기술 : <li> 한 줄을 복사해서 추가 -->
           <article>
             <h3 class="sub" style="--i: 2;">기술 및 AI</h3>
-            <ul class="skills">
+            <ul class="skills" style="margin-top: 16px;">
               <li><img src="./heromain/skill icons/PS.gif" alt="포토샵"><span>포토샵</span></li>
               <li><img src="./heromain/skill icons/ID.gif" alt="인디자인"><span>인디자인</span></li>
               <li><img src="./heromain/skill icons/AI.gif" alt="일러스트레이터"><span>일러스트<br>레이터</span></li>
@@ -146,9 +146,9 @@
       <div class="slider-container">
         <button class="slider-btn prev-btn" aria-label="이전">❮</button>
 
-        <ul class="slider-track center-track">
+        <ul class="slider-track center-track" style="margin-bottom: 16px; width: 1440%; margin-top: 18px; letter-spacing: 0px; line-height: 1.5;">
           <li class="slider-item">
-            <a target="_blank" rel="noopener" href="detail.html?id=1">
+            <a target="_blank" rel="noopener" href="detail.html?id=1" style="margin-top: 0px; position: relative; left: -4px; line-height: 1.2;">
               <img class="thumb" src="./heromain/수상및이력/03수상.png" alt="수상작 1">
               <strong>국립생태원<br>AI 영상 공모전</strong>
               <span>공모전-수상</span>
@@ -212,4 +212,5 @@
 
 
 
-</body><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></html>
+<whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch>
+</body></html>
