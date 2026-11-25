@@ -25,12 +25,12 @@
 
   <!-- 1. 헤더 : 항상 보이는 캡슐 메뉴 ------------------------
        메뉴를 늘리려면 <a> 한 줄만 추가 -->
-  <header class="header on" style="--x: 183.0078125px;">
+  <header class="header on" style="--x: 137.0078125px;">
     <a class="logo" href="#"></a>
     <nav class="nav">
-      <a href="#about">소개</a>
+      <a href="#about" class="active">소개</a>
       <a href="#work">이력 및 수상</a>
-      <a href="#personal" class="active">개인작업</a>
+      <a href="#personal">개인작업</a>
     </nav>
   </header>
 
@@ -105,7 +105,7 @@
           <article>
             <h3 class="sub" style="--i: 3;">자격증</h3>
             <ul class="timeline">
-              <li><span>2026.12</span><strong>웹디자인개발기능사 <em>한국산업인력공단</em></strong></li>
+              <li><span><br></span><strong><br><em><br></em></strong></li>
               <li><span>2026.09</span><strong>컴퓨터그래픽스기능사 <em>한국산업인력공단</em></strong></li>
               <li><span>2026.10</span><strong>ACP 프리미어프로 <em>Adobe Certified Professional</em></strong></li>
               <li><span>2021.11</span><strong>GTQ 포토샵 1급 <em>한국생산성본부(KPC)</em></strong></li>
@@ -207,6 +207,21 @@
   <!-- 모든 동작이 script.js 한 파일에 들어 있습니다 -->
   <script src="script.js"></script><div id="admin-edit-bar" data-editor-ui="true">
     <button id="toggleEditBtn" type="button" class="ed-btn ed-primary">✏️ 편집 모드 켜기</button>
+    <button id="saveLocalBtn" type="button" class="ed-btn" style="display:none;">💾 브라우저 임시저장</button>
+    <button id="resetLocalBtn" type="button" class="ed-btn" style="display:none;">↩️ 임시저장 초기화</button>
+    <button id="downloadHtmlBtn" type="button" class="ed-btn" style="display:none;">📥 HTML 다운로드</button>
+    <button id="saveGithubBtn" type="button" class="ed-btn ed-save" style="display:none;">🚀 깃허브에 즉시 반영</button>
+    <button id="setTokenBtn" type="button" class="ed-btn" style="display:none;" title="깃허브 토큰 설정">🔑 토큰</button>
+  </div><div id="text-space-bar" data-editor-ui="true">
+    <div id="detailSwitcherWrap" style="display:none; align-items:center; gap:6px; padding-right:10px; border-right:1px solid rgba(255,255,255,0.2);"></div>
+    <strong style="color:#fcfdb3;">선택 글자 간격</strong>
+    <label>위(px) <input type="number" id="tsMarginTop" step="1"></label>
+    <label>아래(px) <input type="number" id="tsMarginBottom" step="1"></label>
+    <label>행간 <input type="number" id="tsLineHeight" step="0.1" min="0.8" max="3"></label>
+    <label>자간(px) <input type="number" id="tsLetterSpacing" step="0.5"></label>
+    <button type="button" id="tsResetBtn" class="ge-btn" style="flex:none;">초기화</button>
+  </div><div id="admin-edit-bar" data-editor-ui="true">
+    <button id="toggleEditBtn" type="button" class="ed-btn ed-primary">✏️ 편집 모드 켜기</button>
     <button id="addDetailItemBtn" type="button" class="ed-btn" style="display:none;">➕ 새 작업물(ID) 생성</button>
     <button id="downloadHtmlBtn" type="button" class="ed-btn" style="display: none;">📥 HTML 다운로드</button>
     <button id="saveGithubBtn" type="button" class="ed-btn ed-save" style="display: none;">💾 깃허브 즉시 반영</button>
@@ -219,5 +234,6 @@
 
 
 <whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch>
+
 
 </body></html>
