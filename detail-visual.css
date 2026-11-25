@@ -1,9 +1,9 @@
 /* ==========================================================
-   상세페이지 비주얼 시스템 — 시안 C 완성본
-   딥네이비 유리 패널 + 달빛 포인트
+   상세페이지 바이오 시스템 — 시안 C 완성본
+   립네이비 유리 패널 + 달방 포인트
 
    · style.css 뒤에 연결해서 사용합니다.
-   · 구조 : CASE 라벨(좌상단) + 워드(우상단) + 유리 패널 + 키워드 띠
+   · 구조 : CASE 라벨(좌상단) + 워드(우상단) + 유리 패널 + 키워드 딸
    ========================================================== */
 
 /* ---------- [1] 색과 기준값 ------------------------------ */
@@ -24,7 +24,7 @@ body.detail-page {
   /* 패널 안쪽 여백 */
 }
 
-/* ---------- [2] 페이지 뼈대 ------------------------------ */
+/* ---------- [2] 페이지 뻐대 ------------------------------ */
 body.detail-page main {max-width: 1600px;}
 
 /* 상단 돌아가기 + 유튜브 */
@@ -47,6 +47,9 @@ body.detail-page .detail-bar .back:hover {
 }
 
 body.detail-page .yt-btn {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
   padding: 9px 16px;
   border-radius: 999px;
   border: 1px solid var(--d-line);
@@ -67,7 +70,7 @@ body.detail-page .yt-btn:hover {
 body.detail-page h1 {
   margin: 0 0 clamp(28px, 4vw, 48px);
   font-size: 30px;
-  line-height: 0.4;
+  line-height: 1.25;
   letter-spacing: .01em;
   color: var(--d-ink);}
 
@@ -174,7 +177,7 @@ body.detail-page .d-panel img {border: 0; background-color: transparent;}
   body.detail-page .d-panel {
     transition: border-color .3s ease, box-shadow .3s ease;
   }
-
+}
 
 @media (prefers-reduced-motion: reduce) {
   body.detail-page .d-panel {
@@ -193,5 +196,39 @@ body.detail-page .d-panel img {border: 0; background-color: transparent;}
   body.detail-page .d-case,
   body.detail-page .d-tags {
     color: #dbe7f7;
+  }
+}
+/* ---------- [9] 항목별 액션(영상 링크) & 캡션 ------------------ */
+body.detail-page .d-actions {
+  margin: -12px 0 clamp(20px, 3vw, 32px);
+}
+
+body.detail-page .d-note {
+  margin-top: clamp(24px, 3vw, 36px);
+  padding: 14px 18px;
+  border: 1px dashed rgba(252, 253, 179, .35);
+  border-radius: 12px;
+  color: var(--d-sub);
+  font-size: 14px;
+}
+
+/* ---------- [10] 모바일 상단 바 : 한 줄 유지 ------------------ */
+@media (max-width: 640px) {
+  body.detail-page .detail-bar {
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  body.detail-page .detail-bar .back {
+    font-size: 14px;
+    letter-spacing: .02em;
+    white-space: nowrap;
+  }
+
+  body.detail-page .yt-btn {
+    padding: 8px 12px;
+    font-size: 12.5px;
+    letter-spacing: 0;
   }
 }
