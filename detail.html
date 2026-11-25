@@ -19,6 +19,31 @@
     .detail-item img {
       height: auto;
     }
+    /* 2단 편집 레이아웃 : 이미지 옆에 설명 */
+    .d-row {
+      display: grid;
+      grid-template-columns: minmax(0, 40%) minmax(0, 1fr);
+      gap: clamp(20px, 3.2vw, 44px);
+      align-items: start;
+      margin: 0 0 clamp(44px, 6vw, 72px);
+    }
+    .d-row .d-panel { margin: 0; }
+    .d-row .d-media img {
+      width: 100%;
+      max-height: 62vh;
+      object-fit: contain;
+    }
+    .d-row .d-text > :first-child { margin-top: 0; }
+    .d-row.is-flip { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); }
+    .d-row.is-flip .d-panel { order: 2; }
+    .d-row.is-flip .d-text { order: 1; }
+    @media (max-width: 780px) {
+      .d-row,
+      .d-row.is-flip { grid-template-columns: 1fr; gap: 14px; margin-bottom: 40px; }
+      .d-row .d-panel,
+      .d-row .d-text { order: 0; }
+      .d-row .d-media img { max-height: none; }
+    }
   </style>
 </head>
 
@@ -159,88 +184,109 @@
     <div id="item5" class="detail-item">
       <h1>2026 · 해양안전 콘텐츠 공모전</h1>
 
+      <ul class="d-tags">
+        <li>1분 15초</li>
+        <li>9:16 세로</li>
+        <li>AI 인형극 동요</li>
+      </ul>
+
       <section class="d-fig">
         <p class="d-case">CASE 05</p>
         <p class="d-word" aria-hidden="true">PUPPET</p>
 
-        <div class="d-panel">
-          <div class="d-media is-tinted">
-            <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/a9604176-cd57-4d52-8ea2-5336478e4634.webp" width="788" height="1400" loading="lazy" decoding="async" alt="둥실둥실 주황조끼 도입부 화면">
+        <div class="d-row">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/a9604176-cd57-4d52-8ea2-5336478e4634.webp" width="788" height="1400" loading="lazy" decoding="async" alt="둥실둥실 주황조끼 도입부 화면">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>참여계기</h2>
+            <p>아이들 대상 안전 콘텐츠를 만들어 보고 싶었습니다. 구명조끼 착용은 해마다 강조되는데도 현장에서는
+              여전히 습관으로 자리 잡지 못한다는 기사를 반복해서 접했습니다. 설명이 아니라 노래로 만들면 다를 수
+              있지 않을까 하는 생각으로 이 공모전에 지원했습니다.</p>
           </div>
         </div>
 
-        <ul class="d-tags">
-          <li>1분 15초</li>
-          <li>9:16 세로</li>
-          <li>AI 인형극 동요</li>
-        </ul>
+        <div class="d-row is-flip">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/ac9f6954-ddff-4605-b95a-e298fdb970dc.webp" width="788" height="1400" loading="lazy" decoding="async" alt="해변 세트 장면">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>기획의도</h2>
+            <p>구명조끼 착용은 한 번의 교육으로 끝나는 일이 아니라 매일 반복해야 하는 행동입니다. 그래서 규정을
+              나열하는 대신 아이가 따라 부를 수 있는 후렴을 먼저 만들었습니다. 버클이 잠기는 소리인
+              “딸깍”을 후렴의 첫마디로 두면, 노래를 흥얼거리는 것만으로 착용 행동이 떠오릅니다.</p>
+            <p>1절에는 어깨끈을 누르고 끈을 당겨 가슴에 맞추는 순서를, 2절에는 어른 손을 잡고 깊은 곳에 들어가지
+              않는 수칙을 담았습니다. 규정 조항과 수치는 노래에서 뺐습니다. 아이가 부를 수 없는 문장은 습관이 되지
+              않는다고 판단했기 때문입니다.</p>
+          </div>
+        </div>
+
+        <div class="d-row">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/ef5740a6-eda3-44ba-9453-c6180902d662.webp" width="781" height="1400" loading="lazy" decoding="async" alt="창문 세트와 손인형 두 종">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>제작과정</h2>
+            <p>요구사항 : 9:16 세로, 90초 이내, 생성형 AI를 활용한 창작물<br>
+              아트 스타일 : 펠트 손인형 인형극, 옛 텔레비전 화면 연출<br>
+              사용된 AI : 영상 Kling 3.0, 캐릭터와 배경 이미지 생성 모델, 음악 생성 모델<br>
+              기타 프로그램 : 프리미어 프로</p>
+          </div>
+        </div>
+
+        <div class="d-row is-flip">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/f2353ffa-a9a6-4902-9661-eb92255fad23.webp" width="788" height="1400" loading="lazy" decoding="async" alt="파도 세트 장면">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>화면 구성</h2>
+            <p>00:00 도입 : 두 인형이 올라와 자리 잡고 제목이 뜹니다<br>
+              00:06 후렴 1 : 스트랩을 두드리고 파도처럼 흔들며 노래합니다<br>
+              00:16 1절 : 어깨끈을 누르고 끈을 당기는 착용 순서입니다<br>
+              00:31 후렴 2 : 두 인형이 함께 율동하며 후렴을 반복합니다<br>
+              00:40 2절 : 손을 잡고 모래밭에서 노는 물놀이 수칙입니다<br>
+              00:54 후렴 3 : 파도 세트에서 팔을 벌린 채 마지막 후렴입니다<br>
+              01:08 엔딩 : 하늘로 올라가며 공모전 정보와 기관 로고가 나옵니다</p>
+          </div>
+        </div>
+
+        <div class="d-row">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/78e489c1-0bc9-48fb-81b3-14246a7f5e40.webp" width="788" height="1400" loading="lazy" decoding="async" alt="엔딩 카드 화면">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>검수 기록</h2>
+            <p>입을 벌릴 때 이빨과 혀가 드러남 : 입 벌림 폭을 제한하고 입 안쪽 표현을 금지하는 문장을 추가<br>
+              착용 동작이 조끼를 벗는 것으로 해석됨 : 이미 입고 있는 상태로 한정하고 금지 문장을 명시<br>
+              한쪽 인형이 화면 내내 정지 : 대기 문장을 삭제하고 두 인형 모두 움직이도록 재설계<br>
+              배경이 프레임마다 미세하게 흔들림 : 카메라 고정과 배경 유지를 전 컷에 명시<br>
+              팔이 옆으로 뻗어 마네킹처럼 굳음 : 팔은 어깨 높이를 넘지 않도록 제한</p>
+          </div>
+        </div>
+
+        <div class="d-row is-flip">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/58dcce5b-878f-4270-a563-88233a2c6f50.webp" width="1400" height="1400" loading="lazy" decoding="async" alt="손인형 캐릭터 시트">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>완성 화면</h2>
+            <p>옛 텔레비전 방영물 같은 화면 연출을 적용했습니다. 스캔라인과 비네트, 노이즈, 미세한 색수차를 직접
+              제작한 오버레이로 얹었고, 가사 자막과 제목은 효과 위에 배치해 읽는 데 지장이 없도록 했습니다.</p>
+          </div>
+        </div>
       </section>
-
-      <h2>참여계기</h2>
-      <p>아이들 대상 안전 콘텐츠를 만들어 보고 싶었습니다. 구명조끼 착용은 해마다 강조되는데도 현장에서는
-        여전히 습관으로 자리 잡지 못한다는 기사를 반복해서 접했습니다. 설명이 아니라 노래로 만들면 다를 수
-        있지 않을까 하는 생각으로 이 공모전에 지원했습니다.</p>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/ac9f6954-ddff-4605-b95a-e298fdb970dc.webp" width="788" height="1400" loading="lazy" decoding="async" alt="해변 세트 장면">
-        </div>
-      </div>
-
-      <h2>기획의도</h2>
-      <p>구명조끼 착용은 한 번의 교육으로 끝나는 일이 아니라 매일 반복해야 하는 행동입니다. 그래서 규정을
-        나열하는 대신 아이가 따라 부를 수 있는 후렴을 먼저 만들었습니다. 버클이 잠기는 소리인
-        “딸깍”을 후렴의 첫마디로 두면, 노래를 흥얼거리는 것만으로 착용 행동이 떠오릅니다.</p>
-      <p>1절에는 어깨끈을 누르고 끈을 당겨 가슴에 맞추는 순서를, 2절에는 어른 손을 잡고 깊은 곳에 들어가지
-        않는 수칙을 담았습니다. 규정 조항과 수치는 노래에서 뺐습니다. 아이가 부를 수 없는 문장은 습관이 되지
-        않는다고 판단했기 때문입니다.</p>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/ef5740a6-eda3-44ba-9453-c6180902d662.webp" width="781" height="1400" loading="lazy" decoding="async" alt="창문 세트와 손인형 두 종">
-        </div>
-      </div>
-
-      <h2>제작과정</h2>
-      <p>요구사항 : 9:16 세로, 90초 이내, 생성형 AI를 활용한 창작물<br>
-        아트 스타일 : 펠트 손인형 인형극, 옛 텔레비전 화면 연출<br>
-        사용된 AI : 영상 Kling 3.0, 캐릭터와 배경 이미지 생성 모델, 음악 생성 모델<br>
-        기타 프로그램 : 프리미어 프로</p>
-
-      <hr class="d-divider">
-
-      <h2>화면 구성</h2>
-      <p>00:00 도입 : 두 인형이 올라와 자리 잡고 제목이 뜹니다<br>
-        00:06 후렴 1 : 스트랩을 두드리고 파도처럼 흔들며 노래합니다<br>
-        00:16 1절 : 어깨끈을 누르고 끈을 당기는 착용 순서입니다<br>
-        00:31 후렴 2 : 두 인형이 함께 율동하며 후렴을 반복합니다<br>
-        00:40 2절 : 손을 잡고 모래밭에서 노는 물놀이 수칙입니다<br>
-        00:54 후렴 3 : 파도 세트에서 팔을 벌린 채 마지막 후렴입니다<br>
-        01:08 엔딩 : 하늘로 올라가며 공모전 정보와 기관 로고가 나옵니다</p>
-
-      <h2>검수 기록</h2>
-      <p>입을 벌릴 때 이빨과 혀가 드러남 : 입 벌림 폭을 제한하고 입 안쪽 표현을 금지하는 문장을 추가<br>
-        착용 동작이 조끼를 벗는 것으로 해석됨 : 이미 입고 있는 상태로 한정하고 금지 문장을 명시<br>
-        한쪽 인형이 화면 내내 정지 : 대기 문장을 삭제하고 두 인형 모두 움직이도록 재설계<br>
-        배경이 프레임마다 미세하게 흔들림 : 카메라 고정과 배경 유지를 전 컷에 명시<br>
-        팔이 옆으로 뻗어 마네킹처럼 굳음 : 팔은 어깨 높이를 넘지 않도록 제한</p>
-
-      <h2>완성 화면</h2>
-      <p>옛 텔레비전 방영물 같은 화면 연출을 적용했습니다. 스캔라인과 비네트, 노이즈, 미세한 색수차를 직접
-        제작한 오버레이로 얹었고, 가사 자막과 제목은 효과 위에 배치해 읽는 데 지장이 없도록 했습니다.</p>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/f2353ffa-a9a6-4902-9661-eb92255fad23.webp" width="788" height="1400" loading="lazy" decoding="async" alt="파도 세트 장면">
-        </div>
-      </div>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/78e489c1-0bc9-48fb-81b3-14246a7f5e40.webp" width="788" height="1400" loading="lazy" decoding="async" alt="엔딩 카드 화면">
-        </div>
-      </div>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/58dcce5b-878f-4270-a563-88233a2c6f50.webp" width="1400" height="1400" loading="lazy" decoding="async" alt="손인형 캐릭터 시트">
-        </div>
-      </div>
     </div>
 
   </main>
