@@ -44,6 +44,71 @@
       .d-row .d-text { order: 0; }
       .d-row .d-media img { max-height: none; }
     }
+    /* 요약 스펙 리스트 */
+    .d-spec {
+      list-style: none;
+      margin: clamp(16px, 2.4vw, 24px) 0 0;
+      padding: 0;
+      border-top: 1px solid rgba(191, 216, 255, .22);
+    }
+    .d-spec li {
+      display: flex;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(191, 216, 255, .14);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .d-spec span {
+      flex: 0 0 92px;
+      color: rgba(198, 219, 245, .68);
+      letter-spacing: .04em;
+    }
+    .d-spec strong { font-weight: 500; color: #e8f0f9; }
+    .d-lead {
+      font-size: clamp(17px, 1.35vw, 19px);
+      line-height: 1.75;
+      color: #e8f0f9;
+    }
+    .d-inline-link { color: #fcfdb3; text-underline-offset: 3px; }
+    @media (max-width: 560px) {
+      .d-spec li { flex-direction: column; gap: 2px; font-size: 14px; }
+      .d-spec span { flex: none; font-size: 12px; letter-spacing: .08em; }
+    }
+    /* 키워드 칩 */
+    body.detail-page .d-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      margin: 0 0 clamp(18px, 2.4vw, 26px);
+      padding: 0;
+    }
+    body.detail-page .d-tags li {
+      padding: 5px 12px;
+      border: 1px solid rgba(191, 216, 255, .28);
+      border-radius: 999px;
+      background: rgba(191, 216, 255, .06);
+      font-size: 12.5px;
+      letter-spacing: .06em;
+      color: rgba(198, 219, 245, .92);
+    }
+    /* 데스크톱 워드마크 (모바일은 detail-visual.css 규칙 유지) */
+    @media (min-width: 781px) {
+      body.detail-page .d-fig:has(.d-row) .d-word {
+        position: absolute;
+        right: 0;
+        top: -.46em;
+        margin: 0;
+        font-size: clamp(38px, 6.4vw, 92px);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: .06em;
+        color: rgba(191, 216, 255, .10);
+        pointer-events: none;
+        user-select: none;
+      }
+    }
   </style>
 </head>
 
@@ -58,39 +123,77 @@
     <div id="item1" class="detail-item">
       <h1>2026 · AI 생태 이야기 영상 공모전</h1>
 
+      <ul class="d-tags">
+        <li>국립생태원 대상</li>
+        <li>9:16 세로</li>
+        <li>1인 제작</li>
+      </ul>
+
       <p class="d-actions">
-        <a class="yt-btn" href="https://www.youtube.com/shorts/c4yfzRvDUHg" target="_blank" rel="noopener">▶ 유튜브에서 영상 시청하기</a>
+        <a class="yt-btn" href="https://www.youtube.com/shorts/c4yfzRvDUHg" target="_blank" rel="noopener">▶ 완성 영상 보기</a>
       </p>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/01917b52-149d-46ee-81e9-b58d56c66b99.webp" width="1400" height="788" loading="lazy" decoding="async" alt="국립생태원 AI 생태 이야기 영상 공모전 포스터">
-        </div>
-      </div>
 
-      <h2>참여계기</h2>
-      <p>생성형 AI로 기획·이미지·영상·편집을 혼자 도전해 보는 계기를 찾고 있던 중에, 결과를 검증받을 수 있는
-        공모전을 찾게 되어 도전해 보았고 그 결과 대상을 수상하였습니다.</p>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/00bb1a4f-76a4-4731-99f8-1200a7317dc6.webp" width="1400" height="788" loading="lazy" decoding="async" alt="클레이 애니메이션 스타일 장면">
-        </div>
-      </div>
+      <section class="d-fig">
+        <p class="d-case">CASE 01</p>
+        <p class="d-word" aria-hidden="true">CLAY</p>
 
-      <h2>기획의도</h2>
-      <p>환경보호 실천이라는 주제는 많이 쓰인 내용이라 생각해서 같은 내용을 말하기보다는, 바라보는 방식의
-        차별점을 주기 위해 재밌는 시각에서 바라보면 어떨까 하는 생각에 어릴 때 즐겨봤던 클레이 애니메이션
-        스타일과 미술작품이라는 컨셉을 생각하게 되었습니다.</p>
-      <div class="d-panel">
-        <div class="d-media is-tinted">
-          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/0a682001-de25-4e32-a46a-e96f2137a089.webp" width="1400" height="788" loading="lazy" decoding="async" alt="영상 제작 과정 화면">
+        <div class="d-row">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/01917b52-149d-46ee-81e9-b58d56c66b99.webp" width="1400" height="788" loading="lazy" decoding="async" alt="국립생태원 AI 생태 이야기 영상 공모전 포스터">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>개요</h2>
+            <p class="d-lead">환경보호라는 익숙한 주제를 클레이 애니메이션과 미술작품 같은 화면으로 다시 짜서,
+              국립생태원 공모전에서 대상을 받은 세로 영상입니다.</p>
+            <ul class="d-spec">
+              <li><span>역할</span><strong>기획 · 이미지 생성 · 영상 생성 · 편집 (1인)</strong></li>
+              <li><span>규격</span><strong>9:16 세로, 원본 캐릭터 응용</strong></li>
+              <li><span>도구</span><strong>Google Flow, Premiere Pro</strong></li>
+              <li><span>결과</span><strong>국립생태원 AI 생태 이야기 영상 공모전 대상</strong></li>
+            </ul>
+          </div>
         </div>
-      </div>
 
-      <h2>제작과정</h2>
-      <p>요구사항 : 원본캐릭터를 응용, 9:16비율<br>
-        아트 스타일 : 클레이 애니메이션<br>
-        사용된 AI : 구글 FLOW<br>
-        기타 프로그램 : 프리미어 프로</p>
+        <div class="d-row is-flip">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/00bb1a4f-76a4-4731-99f8-1200a7317dc6.webp" width="1400" height="788" loading="lazy" decoding="async" alt="클레이 애니메이션 스타일 장면">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>접근</h2>
+            <p>환경보호는 이미 많이 다뤄진 주제라, 같은 이야기를 반복하기보다 보는 방식을 바꾸는 쪽을 택했습니다.
+              어릴 때 즐겨 본 클레이 애니메이션의 질감과, 한 장면이 그림처럼 읽히는 미술작품의 구도를 겹쳤습니다.</p>
+            <p>메시지를 설명으로 붙이는 대신 장면 자체가 그림처럼 남게 하는 것이 목표였습니다.</p>
+          </div>
+        </div>
+
+        <div class="d-row">
+          <div class="d-panel">
+            <div class="d-media is-tinted">
+              <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3J4gjsbIKxI0K3m3dt8fyhrW8C3/0a682001-de25-4e32-a46a-e96f2137a089.webp" width="1400" height="788" loading="lazy" decoding="async" alt="영상 제작 과정 화면">
+            </div>
+          </div>
+          <div class="d-text">
+            <h2>제작</h2>
+            <p>주제를 장면 단위로 쪼개 컷마다 그림을 잡고, Google Flow로 클레이 질감의 이미지와 영상 클립을
+              만들었습니다. 마지막으로 Premiere Pro에서 컷 길이와 리듬을 정리했습니다.</p>
+            <ul class="d-spec">
+              <li><span>요구사항</span><strong>원본 캐릭터 응용, 9:16 세로</strong></li>
+              <li><span>아트 스타일</span><strong>클레이 애니메이션, 미술작품 구도</strong></li>
+              <li><span>사용 AI</span><strong>Google Flow</strong></li>
+              <li><span>편집</span><strong>Premiere Pro</strong></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <h2>결과</h2>
+      <p>국립생태원 AI 생태 이야기 영상 공모전에서 대상을 받았습니다. 기획부터 이미지·영상 생성, 편집까지
+        혼자 맡아 끝까지 마무리한 작품입니다.</p>
+      <p>같은 방식으로 만든 두 번째 작품이 <a class="d-inline-link" href="detail.html?id=5">해양안전 인형극</a>입니다.</p>
     </div>
 
     <div id="item2" class="detail-item">
@@ -183,6 +286,17 @@
 
     <div id="item5" class="detail-item">
       <h1>2026 · 해양안전 콘텐츠 공모전</h1>
+
+      <ul class="d-tags">
+        <li>1분 15초</li>
+        <li>9:16 세로</li>
+        <li>AI 인형극 동요</li>
+      </ul>
+
+      <section class="d-fig">
+        <p class="d-case">CASE 05</p>
+        <p class="d-word" aria-hidden="true">PUPPET</p>
+
         <div class="d-row">
           <div class="d-panel">
             <div class="d-media is-tinted">
