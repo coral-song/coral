@@ -248,3 +248,19 @@ body.detail-page .d-row .d-panel img {
   body.detail-page .d-row .d-panel,
   body.detail-page .d-row.is-flip .d-panel { width: 100%; margin: 0; }
 }
+
+/* 2단 레이아웃 : 이미지 폭에 맞춰 열을 잡아 빈 공간 제거 */
+body.detail-page .d-row {
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: clamp(16px, 2vw, 28px);
+}
+body.detail-page .d-row.is-flip {
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+}
+body.detail-page .d-row .d-panel { width: fit-content; max-width: min(560px, 42vw); }
+@media (max-width: 780px) {
+  body.detail-page .d-row,
+  body.detail-page .d-row.is-flip { grid-template-columns: 1fr; }
+  body.detail-page .d-row .d-panel,
+  body.detail-page .d-row.is-flip .d-panel { max-width: 100%; }
+}
