@@ -232,3 +232,19 @@ body.detail-page .d-note {
     letter-spacing: 0;
   }
 }
+
+/* 2단 레이아웃 보정 */
+body.detail-page .d-row { align-items: center; }
+body.detail-page .d-row .d-panel { width: fit-content; max-width: 100%; margin: 0; }
+body.detail-page .d-row.is-flip .d-panel { margin-left: auto; }
+body.detail-page .d-row .d-media img,
+body.detail-page .d-row .d-panel img {
+  width: auto; max-width: 100%; max-height: 58vh;
+  object-fit: initial; display: block;
+}
+@media (max-width: 780px) {
+  body.detail-page .d-row .d-media img,
+  body.detail-page .d-row .d-panel img { max-height: 62vh; }
+  body.detail-page .d-row .d-panel,
+  body.detail-page .d-row.is-flip .d-panel { width: 100%; margin: 0; }
+}
